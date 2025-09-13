@@ -1,0 +1,52 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: myapp-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command: ["mysqld","--default-authentication-plugin=mysql_native_password","--character-set-server=utf8mb4","--collation-server=utf8mb4_general_ci"]
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build: ./backend:/app
+    container_name: myapp-backend
+    # migrate → dev 서버 실행
+    command: >
+      bash -lc "until (echo > /dev/tcp/db/3306) >/dev/null 2>&1; do echo '⏳ waiting for db'; sleep 2; done;
+                python manage.py migrate &&
+                python manage.py runserver 0.0.0.0:8000"
+    environment:
+      DJANGO_SECRET: ${DJANGO_SECRET}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: myapp-frontend
+    command: npm run dev -- --host 0.0.0.0
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules     # node_modules를 컨테이너 내부 전용으로
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
