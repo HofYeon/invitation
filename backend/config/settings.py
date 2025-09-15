@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "core", 
-    "invitation",
+    "app_invitation",
 ]
 
 MIDDLEWARE = [
