@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework",
     "corsheaders",
+    "djoser",
     "core", 
     "app_invitation",
+    "app_user",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +59,43 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+#프론트 도메인
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173/",
+]
+CORS_ALLOW_CREDENTIALS = True
+
+#CSRF 쿠키 -> 헤더 복사용
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173/"]
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE ="None"
+
+# 쿠키 기반 JWT (응답에 쿠키로 실어 보낼 거라 Secure/None 필요)
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,        # 리프레시 토큰 회전
+    "BLACKLIST_AFTER_ROTATION": True,      # 회전된 이전 토큰 무효화
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+# 보안 헤더(운영 필수)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_SSL_REDIRECT = True
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
 TEMPLATES = [
     {

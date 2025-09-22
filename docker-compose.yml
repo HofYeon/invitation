@@ -15,7 +15,7 @@ services:
       - db_data:/var/lib/mysql
 
   backend:
-    build: ./backend:/app
+    build: ./backend
     container_name: myapp-backend
     # migrate → dev 서버 실행
     command: >
