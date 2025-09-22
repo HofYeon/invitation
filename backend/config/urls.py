@@ -15,10 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from core.views import ping
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/ping/", ping),
+    
+    # Djoser: /auth/users/ (회원가입), /auth/users/activation/ (이메일 인증), /auth/users/reset_password/ 등
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.jwt")),  # /auth/jwt/create, /auth/jwt/refresh
+
+    # (원한다면 기본 뷰도 직접 사용 가능)
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]

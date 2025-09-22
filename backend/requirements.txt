@@ -3,3 +3,7 @@ djangorestframework
 django-cors-headers
 mysqlclient
 python-dotenv
+djangorestframework
+djangorestframework-simplejwt
+djoser
+django-cors-headers
