@@ -62,18 +62,26 @@ ROOT_URLCONF = 'config.urls'
 
 #프론트 도메인
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173/",
+    "http://localhost:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 #CSRF 쿠키 -> 헤더 복사용
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173/"]
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE ="None"
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CSRF_COOKIE_SECURE = False 
+CSRF_COOKIE_SAMESITE ="Lax"
+
+# 운영시 https
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE ="None"
 
 # 쿠키 기반 JWT (응답에 쿠키로 실어 보낼 거라 Secure/None 필요)
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SAMESITE = "Lax"
+
+# 운영시 https
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SAMESITE = "None"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -91,11 +99,15 @@ SIMPLE_JWT = {
 }
 
 # 보안 헤더(운영 필수)
-SECURE_HSTS_SECONDS = 31536000
-SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 0     #SECURE_HSTS_SECONDS = 31536000  - 보안 https:
+SECURE_SSL_REDIRECT = False #SECURE_SSL_REDIRECT = True  - 보안 https:
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+ # 프록시 오인 방지
+dSECURE_PROXY_SSL_HEADER = None
+USE_X_FORWARDED_HOST = False
 
 TEMPLATES = [
     {
