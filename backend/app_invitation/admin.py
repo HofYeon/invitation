@@ -69,10 +69,9 @@ class InvitationCalendarAdmin(admin.ModelAdmin):
 # ---------------------------
 @admin.register(InvitationGallery)
 class InvitationGalleryAdmin(admin.ModelAdmin):
-    list_display = ("id", "invitation", "image_path", "order", "createdate")
+    list_display = ("id", "invitation", "image", "order", "createdate")
     list_filter = ("createdate",)
     raw_id_fields = ("invitation",)
-    search_fields = ("image_path",)
 
 
 # ---------------------------
