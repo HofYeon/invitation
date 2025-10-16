@@ -1,0 +1,6 @@
+<h1>청첩장 정보 입력</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">저장</button>
+</form>

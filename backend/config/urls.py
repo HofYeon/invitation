@@ -26,6 +26,7 @@ urlpatterns = [
     # Djoser: /auth/users/ (회원가입), /auth/users/activation/ (이메일 인증), /auth/users/reset_password/ 등
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),  # /auth/jwt/create, /auth/jwt/refresh
+    path("invitation/", include("app_invitation.urls")),
 
     # (원한다면 기본 뷰도 직접 사용 가능)
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

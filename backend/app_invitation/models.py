@@ -46,10 +46,10 @@ class InvitationFamily(models.Model):
         GROOM = 1, "신랑측"
         BRIDE = 2, "신부측"
 
-    invitation = models.OneToOneField(
+    invitation = models.ForeignKey(
         Invitation,
         on_delete=models.CASCADE,
-        related_name="family",
+        related_name="families",
     )
 
     side = models.SmallIntegerField(choices=Side.choices, unique=False)  # 신랑/신부측 구분
@@ -79,7 +79,7 @@ class InvitationFamily(models.Model):
 
 
     def __str__(self):
-        return f"{self.get_side_display()} {self.get_relation_display()} - {self.last_name}{self.first_name}"
+        return f"{self.get_side_display()} - {self.invitation.user.last_name}{self.invitation.user.first_name}"
 
     class Meta:
         db_table = "app_invitationfamily"
@@ -111,7 +111,12 @@ class InvitationGallery(models.Model):
         on_delete=models.CASCADE,
         related_name="gallery",
     )
-    image_path = models.CharField(max_length=500)      # 파일 경로 또는 URL
+    image = models.ImageField(  # ✅ CharField 대신 ImageField
+        upload_to="invitation/gallery/",
+        blank=True,
+        null=True,
+        verbose_name="갤러리 이미지"
+    )
     order = models.PositiveIntegerField(default=0)     # 가장 작은 값 = 메인
     createdate = models.DateTimeField(auto_now_add=True)
 
