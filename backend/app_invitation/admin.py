@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django import forms
+from django_ckeditor_5.widgets import CKEditor5Widget
 from .models import (
     Invitation,
     InvitationGreeting,
@@ -37,11 +39,15 @@ class InvitationAdmin(admin.ModelAdmin):
 # ---------------------------
 # 모시는 글
 # ---------------------------
+class GreetingForm(forms.ModelForm):
+    body = forms.CharField(widget=CKEditor5Widget(config_name='default'))
+    class Meta:
+        model = InvitationGreeting
+        fields = '__all__'
+
 @admin.register(InvitationGreeting)
-class InvitationGreetingAdmin(admin.ModelAdmin):
-    list_display = ("id", "invitation", "title", "subtitle")
-    search_fields = ("title", "subtitle", "body")
-    raw_id_fields = ("invitation",)
+class GreetingAdmin(admin.ModelAdmin):
+    form = GreetingForm
 
 
 # ---------------------------

@@ -137,7 +137,7 @@ class InvitationGallery(models.Model):
         ordering = ["order", "id"]
 
     def __str__(self):
-        return f"{self.invitation_id} - {self.image_path} ({self.order})"
+        return f"{self.invitation_id} - {self.image} ({self.order})"
     
     class Meta:
         db_table = "app_invitationgallery"
