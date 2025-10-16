@@ -8,3 +8,4 @@ djangorestframework-simplejwt
 djoser
 django-cors-headers
 pillow
+django-ckeditor-5

@@ -19,9 +19,13 @@ from django.urls import path, include
 from core.views import ping
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/ping/", ping),
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
 
     # Djoser: /auth/users/ (회원가입), /auth/users/activation/ (이메일 인증), /auth/users/reset_password/ 등
     path("auth/", include("djoser.urls")),
@@ -33,3 +37,6 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
