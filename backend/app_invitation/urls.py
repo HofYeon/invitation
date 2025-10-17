@@ -7,6 +7,6 @@ app_name = 'invitation'
 urlpatterns = [
 
     path('create/', InvitationCreateView.as_view(), name='create'),
-    path('card/<int:invitation_id>/', InvitationCardView.as_view(), name='card'),
+    path('card/<str:username>/', InvitationCardView.as_view(), name='card'),
     path('holiday', views.holiday_view, name='holiday'),
 ]
