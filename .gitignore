@@ -20,7 +20,9 @@ frontend/dist/
 *.log
 *.pid
 db_data/           # (docker-compose에서 볼륨으로 지정했다면 제외)
-.docker-compose.yml
+docker-compose.yml
+frontend/Dockerfile
+backend/Dockerfile
 
 # Env
 .env
