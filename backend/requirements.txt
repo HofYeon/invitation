@@ -9,3 +9,4 @@ djoser
 django-cors-headers
 pillow
 django-ckeditor-5
+gunicorn
