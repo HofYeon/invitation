@@ -24,7 +24,7 @@ services:
   backend:
     build: ./backend
     container_name: myapp-backend
-    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
+    command: gunicorn config.wsgi:application --chdir /app/invitation/backend --bind 0.0.0.0:8000
     environment:
       DJANGO_SECRET: ${DJANGO_SECRET}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -33,9 +33,7 @@ services:
       MYSQL_HOST: db
       MYSQL_PORT: 3306
     volumes:
-      - ./backend:/app
-      - ./backend/static:/app/static
-      - ./backend/media:/app/media
+      - .:/app/invitation
     expose:
       - "8000"
     depends_on:
@@ -52,9 +50,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./frontend/dist:/usr/share/nginx/html
-      - ./backend/static:/app/static
-      - ./backend/media:/app/media
+      - .:/app/invitation
     depends_on:
       - backend
     networks:
