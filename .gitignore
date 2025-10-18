@@ -6,7 +6,7 @@ __pycache__/
 *.sqlite3
 
 # Django
-/backend/media/
+/backend/media/invitation
 staticfiles/
 /backend/config/settings.py
 
