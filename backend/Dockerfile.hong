@@ -1,0 +1,24 @@
+# ✅ Python 기반 이미지
+FROM python:3.12-slim
+
+# 환경 변수
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# 필수 패키지 설치
+RUN apt-get update && apt-get install -y gcc libpq-dev && apt-get clean
+
+# requirements 설치
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 코드 복사
+COPY . /app/
+
+# static 파일 수집
+RUN python manage.py collectstatic --noinput
+
+# gunicorn으로 실행
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]
