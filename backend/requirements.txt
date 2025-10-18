@@ -1,7 +1,7 @@
 Django>=5,<6
 djangorestframework
 django-cors-headers
-mysqlclient
+mysqlclient>=2.2
 python-dotenv
 djangorestframework
 djangorestframework-simplejwt
