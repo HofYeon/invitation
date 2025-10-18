@@ -51,6 +51,7 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - .:/app/invitation
+      - ./ssl:/etc/nginx/ssl
     depends_on:
       - backend
     networks:
