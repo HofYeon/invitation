@@ -8,6 +8,7 @@ __pycache__/
 # Django
 /backend/media/
 staticfiles/
+/backend/config/settings.py
 
 # Node
 frontend/node_modules/
