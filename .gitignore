@@ -27,3 +27,5 @@ backend/Dockerfile
 
 # Env
 .env
+
+ssl/
