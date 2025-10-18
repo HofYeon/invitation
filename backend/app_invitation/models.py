@@ -198,8 +198,8 @@ class InvitationMap(models.Model):
     detail_address = models.CharField("상세 주소", max_length=200, blank=True)
 
     # 좌표(지오코딩 별도 시 채움)
-    # lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    # lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    lat = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True)
+    lng = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True)
     # map_url = models.CharField(max_length=500, blank=True)
 
     createdate = models.DateTimeField(auto_now_add=True)

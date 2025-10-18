@@ -14,7 +14,7 @@ class InvitationCreateView(CreateView):
     success_url = '/invitation/preview/'
 
 class InvitationCardView(View):
-    def get(self, request, invitation_id):
+    def get(self, request, username):
 
         invitation = get_object_or_404(
             Invitation.objects.select_related(
@@ -22,7 +22,7 @@ class InvitationCardView(View):
             ).prefetch_related(
                 Prefetch("families", queryset=InvitationFamily.objects.order_by("order", "id")),"gallery"
             ),
-            id=invitation_id
+            user__username=username
         )
 
         dt = timezone.localtime(invitation.wedding_datetime)
@@ -30,9 +30,6 @@ class InvitationCardView(View):
 
         groom_families = invitation.families.filter(side=InvitationFamily.Side.GROOM)  # 1
         bride_families = invitation.families.filter(side=InvitationFamily.Side.BRIDE)
-        print('        ')
-        print(groom_families)
-        print('       -------------------- ')
         # 2️⃣ 템플릿에 넘길 context 구성
         context = {
             "invitation": invitation,
