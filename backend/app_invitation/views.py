@@ -14,6 +14,17 @@ from .models import Invitation, InvitationFamily, Guestbook
 
 from .forms import GuestbookForm
 
+
+def is_filled(v):
+    return bool(v and str(v).strip())
+
+
+def full_name(last, first):
+    last = (last or "").strip()
+    first = (first or "").strip()
+    return (last + first).strip() or None
+
+
 class InvitationCreateView(CreateView):
     model = Invitation
     template_name = 'invitation/create.html'
@@ -21,7 +32,8 @@ class InvitationCreateView(CreateView):
     success_url = '/invitation/preview/'
 
 class InvitationCardView(View):
-    def get(self, request, username):
+
+    def get(self, request, invitationname):
         # 1) families를 '신랑/신부'로 나눠서 미리 가져오기 (to_attr로 캐시에 저장)
         groom_prefetch = Prefetch(
             'families',
@@ -50,8 +62,79 @@ class InvitationCardView(View):
             .select_related('greeting', 'calendar', 'map')
             .prefetch_related(groom_prefetch, bride_prefetch, guestbook_prefetch, 'gallery')
             .annotate(guestbook_count=Count('guestbook_entries')),  # 필요하면 카운트도 한 번에
-            user__username=username
+            invitationname=invitationname
         )
+
+        #계좌 분리
+        # --- 신랑 측 ---
+        groom_accounts = []
+        if is_filled(getattr(invitation, "groom_account", None)):
+            groom_accounts.append({
+                "label": "main",
+                "role": "couple",
+                "bank":invitation.groom_bankname.strip(),  # 필요 시 Invitation에 은행명 필드가 있으면 채우세요
+                "account": invitation.groom_account.strip(),
+                "holder": full_name(invitation.groom_lastname, invitation.groom_firstname),
+            })
+
+        groom_family = (invitation.pref_groom_families[0] if getattr(invitation, "pref_groom_families", None) else None)
+        if groom_family:
+            if groom_family and is_filled(getattr(groom_family, "father_account", None)):
+                groom_accounts.append({
+                    "label": "family",
+                    "role": "father",
+                    "bank": (groom_family.father_bankname or "").strip() or None,
+                    "account": groom_family.father_account.strip(),
+                    "holder": full_name(groom_family.father_last_name, groom_family.father_first_name),
+                })
+            if groom_family and is_filled(getattr(groom_family, "mother_account", None)):
+                groom_accounts.append({
+                    "label": "family",
+                    "role": "mother",
+                    "bank": (groom_family.mother_bankname or "").strip() or None if hasattr(groom_family,
+                                                                                            "mother_bankname") else None,
+                    "account": groom_family.mother_account.strip(),
+                    "holder": full_name(
+                        getattr(groom_family, "mother_last_name", None),
+                        getattr(groom_family, "mother_first_name", None),
+                    ),
+                })
+
+        # --- 신부 측 ---
+        bride_accounts = []
+        if is_filled(getattr(invitation, "bride_account", None)):
+            bride_accounts.append({
+                "label": "main",
+                "role": "couple",
+                "bank": invitation.bride_bankname.strip(),  # 필요 시 Invitation에 은행명 필드가 있으면 채우세요
+                "account": invitation.bride_account.strip(),
+                "holder": full_name(invitation.bride_lastname, invitation.bride_firstname),
+            })
+
+        bride_family = (
+            invitation.pref_bride_families[0] if getattr(invitation, "pref_bride_families", None) else None)
+        if bride_family:
+            if bride_family and is_filled(getattr(bride_family, "father_account", None)):
+                bride_accounts.append({
+                    "label": "family",
+                    "role": "father",
+                    "bank": (bride_family.father_bankname or "").strip() or None,
+                    "account": bride_family.father_account.strip(),
+                    "holder": full_name(bride_family.father_last_name, bride_family.father_first_name),
+                })
+            if bride_family and is_filled(getattr(bride_family, "mother_account", None)):
+                bride_accounts.append({
+                    "label": "family",
+                    "role": "mother",
+                    "bank": (bride_family.mother_bankname or "").strip() or None if hasattr(bride_family,
+                                                                                            "mother_bankname") else None,
+                    "account": bride_family.mother_account.strip(),
+                    "holder": full_name(
+                        getattr(bride_family, "mother_last_name", None),
+                        getattr(bride_family, "mother_first_name", None),
+                    ),
+                })
+
 
         # 날짜 처리
         dt = timezone.localtime(invitation.wedding_datetime)
@@ -74,6 +157,8 @@ class InvitationCardView(View):
             "map": getattr(invitation, "map", None),
             "weekday_upper": weekday_upper,
             "guestbooks" : guestbooks,
+            "bride_accounts" : bride_accounts,
+            "groom_accounts" : groom_accounts,
         }
 
         return render(request, 'invitation/invitation_card.html', context)
