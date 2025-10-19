@@ -196,6 +196,11 @@ STATIC_ROOT = '/app/invitation/backend/static_collected/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/app/invitation/backend/media/'
 
+
+#업로드 파일 크기 제한 고화질 이미지 대비 50MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024
+
 # 해시 파일명으로 캐시 무력화 (강력 추천)
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
