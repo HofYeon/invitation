@@ -28,3 +28,8 @@ def d_day(value):
     today = date.today()
     delta = (target - today).days
     return f"D-{delta}" if delta > 0 else ("D-Day" if delta == 0 else f"D+{abs(delta)}")
+
+@register.simple_tag(takes_context=True)
+def absolute_uri(context, path):
+    request = context.get('request')
+    return request.build_absolute_uri(path) if request else path
