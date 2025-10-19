@@ -1,13 +1,20 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here
 class Invitation(models.Model):
     user = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_invitations" )
     groom_lastname = models.CharField("신랑 성", max_length=100)
     groom_firstname = models.CharField("신랑 이름", max_length=100)
+    groom_bankname = models.CharField("은행명", max_length=50, blank=True)
+    groom_account = models.CharField("계좌번호", max_length=100, blank=True)
+    groom_phone = models.CharField("휴대폰 번호", max_length=20, blank=True)
     bride_lastname = models.CharField("신부 성", max_length=100)
     bride_firstname = models.CharField("신부 이름", max_length=100)
+    bride_bankname = models.CharField("은행명", max_length=50, blank=True)
+    bride_account = models.CharField("계좌번호", max_length=100, blank=True)
+    bride_phone = models.CharField("휴대폰 번호", max_length=20, blank=True)
     wedding_datetime = models.DateTimeField("결혼식 날짜")
     weddinghall_name = models.CharField("결혼식장 이름", max_length=100)
     weddinghall_info = models.CharField("웨딩홀 정보", max_length=200)
@@ -55,25 +62,31 @@ class InvitationFamily(models.Model):
     side = models.SmallIntegerField(choices=Side.choices, unique=False)  # 신랑/신부측 구분
 
     # 아버님 정보
-    father_last_name = models.CharField(max_length=50, blank=True)
-    father_first_name = models.CharField(max_length=50, blank=True)
-    father_is_baptismal = models.BooleanField(default=False)
-    father_baptismal_name = models.CharField(max_length=100, blank=True)
-    father_is_renamed = models.BooleanField(default=False)
-    father_renamed_name = models.CharField(max_length=100, blank=True)
-    father_is_deceased = models.BooleanField(default=False)
+    father_last_name = models.CharField("아버님  성",max_length=50, blank=True)
+    father_first_name = models.CharField("이름",max_length=50, blank=True)
+    father_is_baptismal = models.BooleanField("세례 여부",default=False)
+    father_baptismal_name = models.CharField("세례명",max_length=100, blank=True)
+    father_is_renamed = models.BooleanField("개명 여부",default=False)
+    father_renamed_name = models.CharField("개명",max_length=100, blank=True)
+    father_is_deceased = models.BooleanField("고인 여부",default=False)
+    father_bankname = models.CharField("은행명", max_length=50, blank=True)
+    father_account = models.CharField("계좌번호", max_length=100, blank=True)
+    father_phone = models.CharField("휴대폰 번호", max_length=20, blank=True)
 
     # 어머님 정보
-    mother_last_name = models.CharField(max_length=50, blank=True)
-    mother_first_name = models.CharField(max_length=50, blank=True)
-    mother_is_baptismal = models.BooleanField(default=False)
-    mother_baptismal_name = models.CharField(max_length=100, blank=True)
-    mother_is_renamed = models.BooleanField(default=False)
-    mother_renamed_name = models.CharField(max_length=100, blank=True)
-    mother_is_deceased = models.BooleanField(default=False)
+    mother_last_name = models.CharField("어머님 성",max_length=50, blank=True)
+    mother_first_name = models.CharField("이름",max_length=50, blank=True)
+    mother_is_baptismal = models.BooleanField("세례 여부",default=False)
+    mother_baptismal_name = models.CharField("세례 명",max_length=100, blank=True)
+    mother_is_renamed = models.BooleanField("개명 여부",default=False)
+    mother_renamed_name = models.CharField("개명",max_length=100, blank=True)
+    mother_is_deceased = models.BooleanField("고인 여부",default=False)
+    mother_bankname = models.CharField("은행명", max_length=50, blank=True)
+    mother_account = models.CharField("계좌번호", max_length=100, blank=True)
+    mother_phone = models.CharField("휴대폰 번호", max_length=20, blank=True)
 
     # 자유 입력
-    free_input = models.CharField(max_length=200, blank=True) #자유 입력이 있을 시 값 우선 
+    free_input = models.CharField("자유 입력",max_length=200, blank=True) #자유 입력이 있을 시 값 우선
 
     order = models.PositiveIntegerField(default=0)     # 출력 순서
 
@@ -209,3 +222,36 @@ class InvitationMap(models.Model):
     
     class Meta:
         db_table = "app_invitationmap"
+
+
+
+#방명록 모델
+class Guestbook(models.Model):
+    invitation = models.ForeignKey(
+        Invitation,
+        related_name='guestbook_entries',
+        on_delete=models.CASCADE
+    )
+    author_name = models.CharField('작성자', max_length=50)
+    password = models.CharField('비밀번호(해시)', max_length=128)  # 평문 저장 금지!
+    content = models.TextField('내용')  # 이모지 포함 텍스트
+    created_at = models.DateTimeField('작성일시', auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def set_password(self, raw_password: str):
+        self.password = make_password(raw_password)
+
+    def check_password(self, raw_password: str) -> bool:
+        return check_password(raw_password, self.password)
+
+    def __str__(self):
+        return f"{self.author_name} - {self.created_at:%Y-%m-%d %H:%M}"
+
+    class Meta:
+        db_table = "app_guestbook"
+
+
+#신랑, 신부측 계좌
+

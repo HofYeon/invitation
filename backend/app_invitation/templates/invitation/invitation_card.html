@@ -1993,10 +1993,27 @@ $("#interview_pop .x_button").click(function(){
 
                     <ul class="rsvpMlist pc-hidden" id="load-books-by">
 
-                    <li><div class="top clearfix"> <span class="nam"><b>부산사나이</b></span><a class="att right cls" onclick="deBooks(this)" data-idx="181336"><b><i class="fa fa-times-circle"></i></b></a></div><div class="mid clearfix"><p></p><xmp>💌 드디어 인생의 가장 아름다운 장이 펼쳐지는 순간이네요. 💍✨
-지금까지도 눈부셨지만, 앞으로는 더 빛나는 날들이 기다리고 있을 거예요.
-서로의 가장 든든한 쉼터가 되어 평생 함께 웃고 사랑하길 진심으로 바랍니다.
-진심으로 축하해요, 행복하세요! 💖</xmp><p></p></div></li><li><div class="top clearfix"> <span class="nam"><b>리오🙃</b></span><a class="att right cls" onclick="deBooks(this)" data-idx="181334"><b><i class="fa fa-times-circle"></i></b></a></div><div class="mid clearfix"><p></p><xmp>두 분의 새로운 시작을 진심으로 응원합니다. 💕행복한 결혼 생활 되시길 바랍니다.💕</xmp><p></p></div></li><li><div class="top clearfix"> <span class="nam"><b>철수와 영희</b></span><a class="att right cls" onclick="deBooks(this)" data-idx="181333"><b><i class="fa fa-times-circle"></i></b></a></div><div class="mid clearfix"><p></p><xmp>두 분의 결혼을 진심으로 축하드립니다~😄😄</xmp><p></p></div></li><li><div class="top clearfix"> <span class="nam"><b>하늘핑</b></span><a class="att right cls" onclick="deBooks(this)" data-idx="181332"><b><i class="fa fa-times-circle"></i></b></a></div><div class="mid clearfix"><p></p><xmp>예쁘고 따뜻한 한미는 행복한 가정을 이룰거야❤️</xmp><p></p></div></li></ul>
+                      {% for entry in guestbooks %}
+                        <li>
+                          <div class="top clearfix">
+                            <span class="nam"><b>{{ entry.author_name }}</b></span>
+                            <a class="att right cls"
+                               onclick="deBooks(this)"
+                               data-idx="{{ entry.id }}">
+                              <b><i class="fa fa-times-circle"></i></b>
+                            </a>
+                          </div>
+
+                          <div class="mid clearfix">
+                            <p></p>
+                            <!-- 내용에 이모지나 줄바꿈이 포함되므로 safe + linebreaksbr -->
+                            <xmp>{{ entry.content|linebreaksbr }}</xmp>
+                            <p></p>
+                          </div>
+                        </li>
+                      {% empty %}
+                        <li><div class="mid clearfix"><p>아직 방명록이 없습니다.</p></div></li>
+                      {% endfor %}
 
 
                     <div style="height: 70px;"></div>
@@ -2018,6 +2035,188 @@ $("#interview_pop .x_button").click(function(){
 
 
 
+<div class="sectionMg layer layer02 clearfix acctSection" id="layer_acc_id">
+
+
+    <!-- 계좌번호 타이틀 및 디스크립션 -->
+    <div class="lai_1">
+        <div class="sectionHead anibox hd">
+            <div class="enstr">ACCOUNT</div>
+            <span class="name">마음 전하실 곳</span>
+                            <div class="sectionDesc">참석이 어려우신 분들을 위해<br>계좌번호를 기재하였습니다.<br>너그러운 마음으로 양해 부탁드립니다.</div>
+                    </div>
+    </div>
+
+    <!-- 계좌번호 UI 시작 -->
+    <div class="lai_2">
+
+
+        <!-- 스와이프형 계좌 -->
+
+            <div>
+</div>
+
+<div class="swipe_acct_box_wrapper ft-gowun-bold">
+
+    <!-- 그룹 탭 -->
+    <div class="group">
+        <div class="radio-swipe-container i-2">
+
+
+                <input type="radio" id="acc_type_swipe-1" name="acc_type_swipe" value="1" checked="">
+                <label for="acc_type_swipe-1">신랑측</label>
+
+
+                <input type="radio" id="acc_type_swipe-2" name="acc_type_swipe" value="2">
+                <label for="acc_type_swipe-2">신부측</label>
+
+
+            <div class="slider"><span></span></div>
+
+        </div>
+    </div>
+
+    <!-- 신랑,신부 계좌번호 토글 -->
+    <div class="group-in-content" style="height:30%;">
+            {{invitation.groom_account}}
+            <div class="gcontents gt-1 active swiper-initialized swiper-horizontal swiper-backface-hidden">
+                <div class="gc1 swiper-wrapper" id="swiper-wrapper-4974c9f5262de3b1" aria-live="polite" style="cursor: grab; transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
+                        {% if invitation.groom_account %}
+                            <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 3" style="margin-right: 16px;">
+                                <div class="a-name">
+                                    김진호
+                                </div>
+                                <a class="a-account" onclick="copy_to_clipboard2('actnm-1-1')">
+                                    <span>신한은행</span>
+                                    <span>110-000-00000</span>
+                                    <img src="{{ MEDIA_URL }}img/copy.svg">
+                                    <textarea id="actnm-1-1" class="txtnone">신한은행 110-000-00000</textarea>
+                                </a>
+                                <div class="buttns">
+                                                                        <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
+                                                                                                </div>
+                            </div>
+                        {% endif %}
+
+                                                                                            <div class="acbox swiper-slide swiper-slide-next" role="group" aria-label="2 / 3" style="margin-right: 16px;">
+                            <div class="a-name">
+                                김건호
+                            </div>
+                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-2')">
+                                <span>우리은행</span>
+                                <span>110-000-00000</span>
+                                <img src="{{ MEDIA_URL }}img/copy.svg">
+                                <textarea id="actnm-1-2" class="txtnone">우리은행 110-000-00000</textarea>
+                            </a>
+                            <div class="buttns">
+                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
+                                                                                            </div>
+                        </div>
+                                                                                            <div class="acbox swiper-slide" role="group" aria-label="3 / 3" style="margin-right: 16px;">
+                            <div class="a-name">
+                                이미자
+                            </div>
+                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-3')">
+                                <span>하나은행</span>
+                                <span>110-000-00000</span>
+                                <img src="{{ MEDIA_URL }}img/copy.svg">
+                                <textarea id="actnm-1-3" class="txtnone">하나은행 110-000-00000</textarea>
+                            </a>
+                            <div class="buttns">
+                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
+                                                                                            </div>
+                        </div>
+                    </div>
+                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+            </div>
+            <div class="gcontents gt-2 swiper-initialized swiper-horizontal swiper-backface-hidden">
+                <div class="gc1 swiper-wrapper" id="swiper-wrapper-d955d60f23305331" aria-live="polite" style="transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
+                                                                    <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 1" style="margin-right: 16px;">
+                            <div class="a-name">
+                                이나은
+                            </div>
+                            <a class="a-account" onclick="copy_to_clipboard2('actnm-2-1')">
+                                <span>하나은행</span>
+                                <span>110-000-00000</span>
+                                <img src="{{ MEDIA_URL }}img/copy.svg">
+                                <textarea id="actnm-2-1" class="txtnone">하나은행 110-000-00000</textarea>
+                            </a>
+                            <div class="buttns">
+                                                                    <a href="https://qr.kakaopay.com/281006011000000310267128"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
+                                                                                            </div>
+                        </div>
+                                                            </div>
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+            </div>
+
+    </div>
+
+
+
+</div>
+<script>
+if (document.querySelector('.gcontents.gt-1')) {
+    new Swiper('.gcontents.gt-1', {
+        slidesPerView: 'auto', // 화면에 3개의 슬라이드 표시
+        spaceBetween: 16, // 슬라이드 간격
+        centeredSlides: true, // 가운데 슬라이드 정렬
+        loop: false, // 무한 스크롤 비활성화
+        initialSlide: 0, // 첫 번째 슬라이드부터 시작
+        grabCursor: true, // 스와이프 커서
+    });
+}
+if (document.querySelector('.gcontents.gt-2')) {
+    new Swiper('.gcontents.gt-2', {
+        slidesPerView: 'auto', // 화면에 3개의 슬라이드 표시
+        spaceBetween: 16, // 슬라이드 간격
+        centeredSlides: true, // 가운데 슬라이드 정렬
+        loop: false, // 무한 스크롤 비활성화
+        initialSlide: 0, // 첫 번째 슬라이드부터 시작
+        grabCursor: true, // 스와이프 커서
+    });
+}
+if (document.querySelector('.gcontents.gt-3')) {
+    new Swiper('.gcontents.gt-3', {
+        slidesPerView: 'auto', // 화면에 3개의 슬라이드 표시
+        spaceBetween: 16, // 슬라이드 간격
+        centeredSlides: true, // 가운데 슬라이드 정렬
+        loop: false, // 무한 스크롤 비활성화
+        initialSlide: 0, // 첫 번째 슬라이드부터 시작
+        grabCursor: true, // 스와이프 커서
+    });
+}
+// 이벤트 리스너를 추가하여 값 변경 감지
+document.querySelectorAll('input[name="acc_type_swipe"]').forEach((radio) => {
+    radio.addEventListener('change', (event) => {
+        if (event.target.checked) {
+            const selectedValue = event.target.value;
+            document.querySelectorAll('.gcontents').forEach((element) => {
+                if (element.classList.contains('gt-' + selectedValue)) {
+                    element.classList.add('active'); // 활성화
+                } else {
+                    element.classList.remove('active'); // 비활성화
+                }
+            });
+        }
+    });
+});
+</script>
+
+
+    </div><!-- 끝 - 계좌번호 UI -->
+
+
+    <div class="lai_3">
+            </div>
+
+    <div class="lai_4">
+    </div>
+
+
+
+
+
+</div>
 
 <!-- 방명록 시작  -->
 <div class="sectionMg layer layer03 clearfix">
@@ -2271,50 +2470,28 @@ ul.books li .b.video .bottom > span {
             </style>
         <div class="books-open-list">
             <ul class="books-open-list-ul">
-                                                            <li class="on">
-                            <div class="top-info">
-                                <div class="name">부산사나이</div>
-                                <div class="close">
-                                    <span style="visibility: hidden">2025년 8월 11일</span>
-                                    <span class="xx" onclick="deBooks(this)" data-idx="181336"></span>
-                                </div>
-                            </div>
-                            <div class="note">💌 드디어 인생의 가장 아름다운 장이 펼쳐지는 순간이네요. 💍✨
-지금까지도 눈부셨지만, 앞으로는 더 빛나는 날들이 기다리고 있을 거예요.
-서로의 가장 든든한 쉼터가 되어 평생 함께 웃고 사랑하길 진심으로 바랍니다.
-진심으로 축하해요, 행복하세요! 💖</div>
-                        </li>
-                                            <li class="on">
-                            <div class="top-info">
-                                <div class="name">리오🙃</div>
-                                <div class="close">
-                                    <span style="visibility: hidden">2025년 8월 11일</span>
-                                    <span class="xx" onclick="deBooks(this)" data-idx="181334"></span>
-                                </div>
-                            </div>
-                            <div class="note">두 분의 새로운 시작을 진심으로 응원합니다. 💕행복한 결혼 생활 되시길 바랍니다.💕</div>
-                        </li>
-                                            <li class="on">
-                            <div class="top-info">
-                                <div class="name">철수와 영희</div>
-                                <div class="close">
-                                    <span style="visibility: hidden">2025년 8월 11일</span>
-                                    <span class="xx" onclick="deBooks(this)" data-idx="181333"></span>
-                                </div>
-                            </div>
-                            <div class="note">두 분의 결혼을 진심으로 축하드립니다~😄😄</div>
-                        </li>
-                                            <li class="on">
-                            <div class="top-info">
-                                <div class="name">하늘핑</div>
-                                <div class="close">
-                                    <span style="visibility: hidden">2025년 8월 11일</span>
-                                    <span class="xx" onclick="deBooks(this)" data-idx="181332"></span>
-                                </div>
-                            </div>
-                            <div class="note">예쁘고 따뜻한 한미는 행복한 가정을 이룰거야❤️</div>
-                        </li>
-                                                </ul>
+              {% for entry in guestbooks %}
+                <li class="on">
+                  <div class="top-info">
+                    <div class="name">{{ entry.author_name }}</div>
+                    <div class="close">
+                      <span style="visibility: hidden">
+                        {{ entry.created_at|date:"Y년 n월 j일" }}
+                      </span>
+                      <span class="xx" onclick="deBooks(this)" data-idx="{{ entry.id }}"></span>
+                    </div>
+                  </div>
+
+                  <div class="note">
+                    {{ entry.content|linebreaksbr }}
+                  </div>
+                </li>
+              {% empty %}
+                <li>
+                  <div class="note">아직 방명록이 없습니다.</div>
+                </li>
+              {% endfor %}
+            </ul>
                                     <div class="books-w-wrap str wrt" style="">
                 <a id="books-write-open" class="books-w">작성하기</a>
             </div>
@@ -2353,184 +2530,6 @@ $(document).ready(function(){
 
 
 
-
-<div class="sectionMg layer layer02 clearfix acctSection" id="layer_acc_id">
-
-
-    <!-- 계좌번호 타이틀 및 디스크립션 -->
-    <div class="lai_1">
-        <div class="sectionHead anibox hd">
-            <div class="enstr">ACCOUNT</div>
-            <span class="name">마음 전하실 곳</span>
-                            <div class="sectionDesc">참석이 어려우신 분들을 위해<br>계좌번호를 기재하였습니다.<br>너그러운 마음으로 양해 부탁드립니다.</div>
-                    </div>
-    </div>
-
-    <!-- 계좌번호 UI 시작 -->
-    <div class="lai_2">
-
-
-        <!-- 스와이프형 계좌 -->
-
-            <div>
-</div>
-
-<div class="swipe_acct_box_wrapper ft-gowun-bold">
-
-    <!-- 그룹 탭 -->
-    <div class="group">
-        <div class="radio-swipe-container i-2">
-
-
-                <input type="radio" id="acc_type_swipe-1" name="acc_type_swipe" value="1" checked="">
-                <label for="acc_type_swipe-1">신랑측</label>
-
-
-                <input type="radio" id="acc_type_swipe-2" name="acc_type_swipe" value="2">
-                <label for="acc_type_swipe-2">신부측</label>
-
-
-            <div class="slider"><span></span></div>
-
-        </div>
-    </div>
-
-    <!-- 신랑,신부 계좌번호 토글 -->
-    <div class="group-in-content" style="height:30%;">
-
-                                <div class="gcontents gt-1 active swiper-initialized swiper-horizontal swiper-backface-hidden">
-                <div class="gc1 swiper-wrapper" id="swiper-wrapper-4974c9f5262de3b1" aria-live="polite" style="cursor: grab; transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
-                                                                    <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 3" style="margin-right: 16px;">
-                            <div class="a-name">
-                                김진호
-                            </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-1')">
-                                <span>신한은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-1-1" class="txtnone">신한은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
-                                                                                            <div class="acbox swiper-slide swiper-slide-next" role="group" aria-label="2 / 3" style="margin-right: 16px;">
-                            <div class="a-name">
-                                김건호
-                            </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-2')">
-                                <span>우리은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-1-2" class="txtnone">우리은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
-                                                                                            <div class="acbox swiper-slide" role="group" aria-label="3 / 3" style="margin-right: 16px;">
-                            <div class="a-name">
-                                이미자
-                            </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-3')">
-                                <span>하나은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-1-3" class="txtnone">하나은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
-                                                            </div>
-            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-                                <div class="gcontents gt-2 swiper-initialized swiper-horizontal swiper-backface-hidden">
-                <div class="gc1 swiper-wrapper" id="swiper-wrapper-d955d60f23305331" aria-live="polite" style="transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
-                                                                    <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 1" style="margin-right: 16px;">
-                            <div class="a-name">
-                                이나은
-                            </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-2-1')">
-                                <span>하나은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-2-1" class="txtnone">하나은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com/281006011000000310267128"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
-                                                            </div>
-            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-
-    </div>
-
-
-
-</div>
-<script>
-if (document.querySelector('.gcontents.gt-1')) {
-    new Swiper('.gcontents.gt-1', {
-        slidesPerView: 'auto', // 화면에 3개의 슬라이드 표시
-        spaceBetween: 16, // 슬라이드 간격
-        centeredSlides: true, // 가운데 슬라이드 정렬
-        loop: false, // 무한 스크롤 비활성화
-        initialSlide: 0, // 첫 번째 슬라이드부터 시작
-        grabCursor: true, // 스와이프 커서
-    });
-}
-if (document.querySelector('.gcontents.gt-2')) {
-    new Swiper('.gcontents.gt-2', {
-        slidesPerView: 'auto', // 화면에 3개의 슬라이드 표시
-        spaceBetween: 16, // 슬라이드 간격
-        centeredSlides: true, // 가운데 슬라이드 정렬
-        loop: false, // 무한 스크롤 비활성화
-        initialSlide: 0, // 첫 번째 슬라이드부터 시작
-        grabCursor: true, // 스와이프 커서
-    });
-}
-if (document.querySelector('.gcontents.gt-3')) {
-    new Swiper('.gcontents.gt-3', {
-        slidesPerView: 'auto', // 화면에 3개의 슬라이드 표시
-        spaceBetween: 16, // 슬라이드 간격
-        centeredSlides: true, // 가운데 슬라이드 정렬
-        loop: false, // 무한 스크롤 비활성화
-        initialSlide: 0, // 첫 번째 슬라이드부터 시작
-        grabCursor: true, // 스와이프 커서
-    });
-}
-// 이벤트 리스너를 추가하여 값 변경 감지
-document.querySelectorAll('input[name="acc_type_swipe"]').forEach((radio) => {
-    radio.addEventListener('change', (event) => {
-        if (event.target.checked) {
-            const selectedValue = event.target.value;
-            document.querySelectorAll('.gcontents').forEach((element) => {
-                if (element.classList.contains('gt-' + selectedValue)) {
-                    element.classList.add('active'); // 활성화
-                } else {
-                    element.classList.remove('active'); // 비활성화
-                }
-            });
-        }
-    });
-});
-</script>
-
-
-    </div><!-- 끝 - 계좌번호 UI -->
-
-
-    <div class="lai_3">
-            </div>
-
-    <div class="lai_4">
-    </div>
-
-
-
-
-
-</div>
     <style>
          .c_vcc { display: none !important; }             .en_wrap {
             display: flex;
@@ -2840,39 +2839,39 @@ document.querySelectorAll('input[name="acc_type_swipe"]').forEach((radio) => {
 <!--        </div>-->
 <!--    </div>-->
 
-            <script>
+<!--<script>-->
 
-        // 사진3장 로드
-        const imageUrls = [
-                        'https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/t9Uqge7Tjl.png',
-                        'https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/w86sCJbptO.png',
-                        'https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/ISk2I6PH6H.png',
-                    ];
+<!--        // 사진3장 로드-->
+<!--        const imageUrls = [-->
+<!--                        'https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/t9Uqge7Tjl.png',-->
+<!--                        'https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/w86sCJbptO.png',-->
+<!--                        'https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/ISk2I6PH6H.png',-->
+<!--                    ];-->
 
 
 
-        const stackContainer = document.getElementById('imageStack');
-        stackContainer.innerHTML = imageUrls.map(url => `<img src="${url}" alt="Card Image" />`).join('');
+<!--        const stackContainer = document.getElementById('imageStack');-->
+<!--        stackContainer.innerHTML = imageUrls.map(url => `<img src="${url}" alt="Card Image" />`).join('');-->
 
-        // 사진3장 애니메이션 시작
-        document.addEventListener("DOMContentLoaded", function () {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("in-view");
-                        observer.unobserve(entry.target); // 한 번만 실행
-                    }
-                });
-            }, {
-                threshold: 1 // 30% 정도 보이면 적용
-            });
+<!--        // 사진3장 애니메이션 시작-->
+<!--        document.addEventListener("DOMContentLoaded", function () {-->
+<!--            const observer = new IntersectionObserver((entries) => {-->
+<!--                entries.forEach(entry => {-->
+<!--                    if (entry.isIntersecting) {-->
+<!--                        entry.target.classList.add("in-view");-->
+<!--                        observer.unobserve(entry.target); // 한 번만 실행-->
+<!--                    }-->
+<!--                });-->
+<!--            }, {-->
+<!--                threshold: 1 // 30% 정도 보이면 적용-->
+<!--            });-->
 
-            const cardStack = document.querySelector('.card-stack');
-            if (cardStack) {
-                observer.observe(cardStack);
-            }
-        });
-    </script>
+<!--            const cardStack = document.querySelector('.card-stack');-->
+<!--            if (cardStack) {-->
+<!--                observer.observe(cardStack);-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
 
 
             <div class="sectionMg layer anibox clearfix garlandSection hd">
@@ -3379,183 +3378,185 @@ $(document).ready(function() {
 //=============================================
 // 방명록
 
-    // $(document).ready(function() {
-    //     $('.anibox_books').addClass("hd").viewportChecker({
-    //         classToAdd: 'visible animated faster fadeInUp',
-    //         offset: 100
-    //     });
-    // });
-    //
-    //         //var myUid = '00';
-    //     var cardUid = '46097';
-    //
-    // var loadBooksAnysc = true;
-    // var booksPage = 0;
-    //
-    //
-    // function loadBooks() {
-    //
-    //     if(!loadBooksAnysc) { console.log('방명록 목록을 가져오는 중입니다..'); return; }
-    //     loadBooksAnysc = false;
-    //
-    //     booksPage++;
-    //     $.ajax({
-    //         type : 'get',
-    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    //         data : {
-    //             "page" : booksPage
-    //         },
-    //         url : '/card-books/9Vr0MZLBrt',
-    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    //         success : function(data){
-    //
-    //             if(booksPage >= data.page.totalPageCount) {
-    //                 $("#more-btn-books-by").detach(); // 더보기 버튼 삭제
-    //             }
-    //
-    //             var c = '';
-    //             $.each(data.books, function(idx, val){
-    //
-    //                 //console.log(val);
-    //                 var note = encodeURIComponent(val.note);
-    //
-    //                 c += '<li>';
-    //                 c += '<div class="top clearfix"> ';
-    //                 c += '<span class="nam"><b>'+val.name+'</b></span>';
-    //                 c += '<a class="att right cls" onclick="deBooks(this)" data-idx="'+val.idx+'"><b><i class="fa fa-times-circle"></i></b></a>';
-    //                 if(false ) {
-    //                     c += '<span class="right date">'+val.created_at+'</span>';
-    //                 }
-    //                 c += '</div>';
-    //                 c += '<div class="mid clearfix">';
-    //                 c += '<p><xmp>'+val.note+'</xmp></p>';
-    //                 c += '</div>';
-    //                 c += '</li>';
-    //                 c += '';
-    //
-    //             });
-    //             $("#load-books-by").append(c);
-    //
-    //             loadBooksAnysc = true;
-    //
-    //         }
-    //     });
-    // }
-    //
-    // function deBooks(i) {
-    //
-    //     var pw = '';
-    //     var idx = $(i).attr("data-idx");
-    //
-    //     //if(myUid != cardUid) {
-    //         pw = window.prompt('방명록을 작성할 때 입력하신 비밀번호를 입력하세요','');
-    //         if(pw==null||pw=="") { return; }
-    //     //}else{
-    //     //    if(!window.confirm('정말로 삭제하시겠습니까?','')) { return; }
-    //     // }
-    //
-    //     $.ajax({
-    //         type : 'delete',
-    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    //         data : {
-    //             "password" : pw,
-    //             "idx" : idx
-    //         },
-    //         url : '/card-books/9Vr0MZLBrt',
-    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    //         success : function(data){
-    //
-    //             if(data) {
-    //                 alert("삭제 되었습니다.");
-    //                 location.reload();
-    //             }else{
-    //                 alert("비밀번호가 일치하지 않아 삭제할 수 없습니다.");
-    //             }
-    //
-    //         },
-    //         error : function(err) {
-    //             alert("삭제 중에 문제가 발생했습니다.\r\n문의하기로 연락주시면 확인 즉시 도와드리겠습니다.");
-    //         }
-    //     });
-    // }
-    //
-    //
-    // if($(".books-swiper").is(":visible")) {
-    //     new Swiper('.books-swiper', {
-    //         slidesPerView: "auto",
-    //         spaceBetween: 10,
-    //         pagination: {
-    //             el: ".books-swiper .swiper-pagination",
-    //             clickable: true,
-    //         },
-    //     });
-    // }
-    //
-    //
-    // loadBooks();
-    //
-    //
-    //
-    // gubook_write_sctop = 0;
-    //
-    // // 방명록 전체보기 팝업 열기
-    // $(".books-all > a.a, #books-all-open").click(function(){ gubook_write_sctop = $(window).scrollTop(); $("html,body").css("height", "100%"); $("html,body").css("overflow-y", "hidden"); $("#gustbk_list").css("display", "block"); });
-    //
-    // // 방명록 작성 팝업 열기
-    // $("#books-write-open, .books-all > a.w").click(function(){ gubook_write_sctop = $(window).scrollTop(); $("html,body").css("height", "100%"); $("html,body").css("overflow-y", "hidden"); $("#gustbk_op").css("display", "block"); });
-    //
-    // // 팝업 닫기
-    // $("#gustbk_list .clse, #gustbk_op .clse").click(function(){ $("html,body").css("height", "auto"); $("html,body").css("overflow-y", "visible");$("html, body").animate({scrollTop: gubook_write_sctop},10);$(this).parents(".wpopclass").css("display", "none"); });
-    //
-    // // 방명록 삭제 버튼 클릭
-    // $(".books-swiper .swiper-slide .close").click(function(){ deBooks(this); });
-    //
-    // var isBooksWriteLoading = false;
-    //
-    // // 방명록 작성하기 버튼 클릭
-    // $("#gustbk_op .att-fdver-btn").click(function(){
-    //
-    //
-    //     var data = $("#gustbk_op form").serializeObject();
-    //     if(!check.isNotNull(data.name)) {alert("이름을 입력해주세요.");return;}
-    //     if(!check.isNotNull(data.password)) {alert("비밀번호를 입력해주세요.");return;}
-    //     if(!check.isNotNull(data.note)) {alert("방명록 내용을 입력해주세요.");return;}
-    //
-    //     data.name = data.name.trim();
-    //     if(data.name.length<1) {
-    //         alert("이름은 1글자 이상 입력해주세요."); return;
-    //     }
-    //
-    //     data.password = data.password.trim();
-    //     if(data.password.length<4) {
-    //         alert("비밀번호는 4글자 이상 입력해주세요."); return;
-    //     }
-    //
-    //     if(!isBooksWriteLoading) {
-    //         isBooksWriteLoading = true;
-    //         loading(true);
-    //         $.ajax({
-    //             type : 'post',
-    //             //dataType : "text",
-    //             //contentType : "application/json; charset=utf-8",
-    //             data : data,
-    //             //async : false,
-    //             url : '/card-books/9Vr0MZLBrt',
-    //             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    //             success : function(data){
-    //                 loading(false);
-    //                 location.reload();
-    //             },
-    //             error : function(err) {
-    //                 loading(false);
-    //                 isBooksWriteLoading = false;
-    //                 console.log(err);
-    //                 alert("등록 중에 문제가 발생했습니다.\r\n문의하기로 연락주시면 확인 즉시 도와드리겠습니다.");
-    //             }
-    //         });
-    //     }
+    $(document).ready(function() {
+        $('.anibox_books').addClass("hd").viewportChecker({
+            classToAdd: 'visible animated faster fadeInUp',
+            offset: 100
+        });
+    });
 
-    // });
+            //var myUid = '00';
+        var cardUid = '46097';
+
+    var loadBooksAnysc = true;
+    var booksPage = 0;
+
+
+    function loadBooks() {
+
+        if(!loadBooksAnysc) { console.log('방명록 목록을 가져오는 중입니다..'); return; }
+        loadBooksAnysc = false;
+
+        booksPage++;
+        $.ajax({
+            type : 'get',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data : {
+                "page" : booksPage
+            },
+            url : '/card-books/9Vr0MZLBrt',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success : function(data){
+
+                if(booksPage >= data.page.totalPageCount) {
+                    $("#more-btn-books-by").detach(); // 더보기 버튼 삭제
+                }
+
+                var c = '';
+                $.each(data.books, function(idx, val){
+
+                    //console.log(val);
+                    var note = encodeURIComponent(val.note);
+
+                    c += '<li>';
+                    c += '<div class="top clearfix"> ';
+                    c += '<span class="nam"><b>'+val.name+'</b></span>';
+                    c += '<a class="att right cls" onclick="deBooks(this)" data-idx="'+val.idx+'"><b><i class="fa fa-times-circle"></i></b></a>';
+                    if(false ) {
+                        c += '<span class="right date">'+val.created_at+'</span>';
+                    }
+                    c += '</div>';
+                    c += '<div class="mid clearfix">';
+                    c += '<p><xmp>'+val.note+'</xmp></p>';
+                    c += '</div>';
+                    c += '</li>';
+                    c += '';
+
+                });
+                $("#load-books-by").append(c);
+
+                loadBooksAnysc = true;
+
+            }
+        });
+    }
+
+    function deBooks(i) {
+
+        var pw = '';
+        var idx = $(i).attr("data-idx");
+
+        pw = window.prompt('방명록을 작성할 때 입력하신 비밀번호를 입력하세요','');
+        if(pw==null||pw=="") { return; }
+
+        var csrftoken = $('meta[name="csrf-token"]').attr('content'); // 템플릿에 {% csrf_token %} 메타 넣어뒀다면
+
+        $.ajax({
+          url: `/invitation/guestbooks/${idx}/delete/`,      // ✅ 엔드포인트를 리소스 URL로
+          method: 'DELETE',                           // ✅ HTTP 메서드
+          headers: { 'X-CSRFToken': csrftoken },      // ✅ 헤더 이름: X-CSRFToken (대소문자 정확히)
+          data: { password: pw },                     // ✅ DRF가 폼/쿼리스트링 모두 파싱함
+          success: function (_data, _textStatus, xhr) {
+            if (xhr.status === 204) {                 // ✅ 삭제 성공은 204라 body 없음
+              alert('삭제 되었습니다.');
+              location.reload();
+            } else {
+              // 일부 환경에서 200으로 처리해 응답 본문을 줄 수도 있으니 보강
+              alert('삭제 되었습니다.');
+              location.reload();
+            }
+          },
+          error: function (xhr) {
+            const msg = (xhr.responseJSON && (xhr.responseJSON.detail || xhr.responseJSON.message))
+                        || '비밀번호가 일치하지 않아 삭제할 수 없습니다.';
+            alert(msg);
+          }
+        });
+    }
+
+
+    if($(".books-swiper").is(":visible")) {
+        new Swiper('.books-swiper', {
+            slidesPerView: "auto",
+            spaceBetween: 10,
+            pagination: {
+                el: ".books-swiper .swiper-pagination",
+                clickable: true,
+            },
+        });
+    }
+
+
+    loadBooks();
+
+
+
+    gubook_write_sctop = 0;
+
+    // 방명록 전체보기 팝업 열기
+    $(".books-all > a.a, #books-all-open").click(function(){ gubook_write_sctop = $(window).scrollTop(); $("html,body").css("height", "100%"); $("html,body").css("overflow-y", "hidden"); $("#gustbk_list").css("display", "block"); });
+
+    // 방명록 작성 팝업 열기
+    $("#books-write-open, .books-all > a.w").click(function(){ gubook_write_sctop = $(window).scrollTop(); $("html,body").css("height", "100%"); $("html,body").css("overflow-y", "hidden"); $("#gustbk_op").css("display", "block"); });
+
+    // 팝업 닫기
+    $("#gustbk_list .clse, #gustbk_op .clse").click(function(){ $("html,body").css("height", "auto"); $("html,body").css("overflow-y", "visible");$("html, body").animate({scrollTop: gubook_write_sctop},10);$(this).parents(".wpopclass").css("display", "none"); });
+
+    // 방명록 삭제 버튼 클릭
+    $(".books-swiper .swiper-slide .close").click(function(){ deBooks(this); });
+
+    var isBooksWriteLoading = false;
+
+    // 방명록 작성하기 버튼 클릭
+    $("#gustbk_op .att-fdver-btn").click(function(){
+
+
+        var data = $("#gustbk_op form").serializeObject();
+        if(!check.isNotNull(data.name)) {alert("이름을 입력해주세요.");return;}
+        if(!check.isNotNull(data.password)) {alert("비밀번호를 입력해주세요.");return;}
+        if(!check.isNotNull(data.note)) {alert("방명록 내용을 입력해주세요.");return;}
+
+        data.name = data.name.trim();
+        if(data.name.length<1) {
+            alert("이름은 1글자 이상 입력해주세요."); return;
+        }
+
+        data.password = data.password.trim();
+        if(data.password.length<4) {
+            alert("비밀번호는 4글자 이상 입력해주세요."); return;
+        }
+
+
+
+        if(!isBooksWriteLoading) {
+            isBooksWriteLoading = true;
+            loading(true);
+
+            var payload = {
+              author_name: data.name,
+              content: data.note,
+              raw_password: data.password
+            };
+
+            $.ajax({
+                type : 'POST',
+                data : payload,
+                url : "{% url 'invitation:guestbook_create' invitation.id %}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success : function(){
+                    loading(false);
+                    location.reload();
+                },
+                error : function(err) {
+                    loading(false);
+                    isBooksWriteLoading = false;
+                    console.log(err);
+                    alert("등록 중에 문제가 발생했습니다.\r\n문의하기로 연락주시면 확인 즉시 도와드리겠습니다.");
+                }
+            });
+        }
+
+    });
 </script>
 
 <!-- WATERMARK -->

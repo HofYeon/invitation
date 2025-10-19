@@ -8,6 +8,7 @@ from .models import (
     InvitationCalendar,
     InvitationGallery,
     InvitationMap,
+    Guestbook,
 )
 
 # ---------------------------
@@ -89,3 +90,29 @@ class InvitationMapAdmin(admin.ModelAdmin):
     search_fields = ("address", "building_name", "roadname")
     list_filter = ("sido", "sigungu")
     raw_id_fields = ("invitation",)
+
+class GuestbookInline(admin.TabularInline):
+    model = Guestbook
+    extra = 0
+    can_delete = True
+    ordering = ('-created_at',)
+    readonly_fields = ('author_name', 'content', 'created_at', 'password')  # 해시 비번은 노출 X
+    fields = ('author_name', 'content','password', 'created_at')
+
+# ---- 방명록 전용 리스트 화면 ----
+@admin.register(Guestbook)
+class GuestbookAdmin(admin.ModelAdmin):
+    list_display = ('id', 'invitation', 'author_name', 'created_at', 'content_preview')
+    list_filter = ('invitation', 'created_at')
+    search_fields = ('author_name', 'content')
+    ordering = ('-created_at',)
+    date_hierarchy = 'created_at'
+    readonly_fields = ('invitation', 'author_name', 'content', 'created_at', 'password')  # 비밀번호 해시 노출 X
+    # 보여줄 필드 순서(상단 상세 패널)
+    fields = ('invitation', 'author_name', 'password', 'content', 'created_at')
+
+    def content_preview(self, obj):
+        # 이모지 그대로 보이고 40자만 미리보기
+        text = (obj.content or '')
+        return (text[:40] + '…') if len(text) > 40 else text
+    content_preview.short_description = '내용(미리보기)'
