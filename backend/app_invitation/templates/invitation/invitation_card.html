@@ -2946,13 +2946,13 @@ $(document).ready(function(){
 
     <!-- 하단 -->
 
-<!--    <div style="text-align: center;" class="ft-gowun-bold">-->
-<!--        <div id="kakao-link-btn" onclick="sendLink()" style="padding: 30px 0 10px 0; margin-bottom: -10px; position: relative; z-index: 10; cursor: pointer;">-->
-<!--            <a class="kkt-share">카카오톡으로 초대장 보내기</a>-->
-<!--            <input type="hidden" name="kt_01" value="10월 25일 김진호 ♥ 이나은 결혼합니다.">-->
-<!--            <input type="hidden" name="kt_02" value="">-->
-<!--        </div>-->
-<!--    </div>-->
+    <div style="text-align: center;" class="ft-gowun-bold">
+        <div id="kakao-link-btn" onclick="sendLink()" style="padding: 30px 0 10px 0; margin-bottom: -10px; position: relative; z-index: 10; cursor: pointer;">
+            <a class="kkt-share">카카오톡으로 초대장 보내기</a>
+            <input type="hidden" name="kt_01" value="10월 25일 김진호 ♥ 이나은 결혼합니다.">
+            <input type="hidden" name="kt_02" value="">
+        </div>
+    </div>
 
 
 <!--    <div class="card-bottom-copyright ft-gowun-bold">-->
@@ -3126,44 +3126,44 @@ $(document).ready(function(){
 // 카톡 초대장 보내기
 // Kakao.init('5709891a2c310e910f34bfad3d87cefc');
 
-// function sendLink() {
-//
-//     Kakao.Share.sendDefault({
-//       objectType: 'feed',
-//       content: {
-//         title: '딸기 치즈 케익',
-//         description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
-//         imageUrl:
-//           'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
-//         link: {
-//           // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-//           mobileWebUrl: 'https://yeon-mintcard.shop',
-//           webUrl: 'https://yeon-mintcard.shop',
-//         },
-//       },
-//       social: {
-//         likeCount: 286,
-//         commentCount: 45,
-//         sharedCount: 845,
-//       },
-//       buttons: [
-//         {
-//           title: '웹으로 보기',
-//           link: {
-//             mobileWebUrl: 'https://developers.kakao.com',
-//             webUrl: 'https://developers.kakao.com',
-//           },
-//         },
-//         {
-//           title: '앱으로 보기',
-//           link: {
-//             mobileWebUrl: 'https://developers.kakao.com',
-//             webUrl: 'https://developers.kakao.com',
-//           },
-//         },
-//       ],
-//     });
-// }
+function sendLink() {
+
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '딸기 치즈 케익',
+        description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
+        imageUrl:
+          'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        link: {
+          // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+          mobileWebUrl: 'https://yeon-mintcard.shop',
+          webUrl: 'https://yeon-mintcard.shop',
+        },
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845,
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+      ],
+    });
+}
 
 
 //=============================================
