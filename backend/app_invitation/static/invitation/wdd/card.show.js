@@ -249,7 +249,7 @@ function fnCallWeb2App(type) {
         case 'kakaoNavi':
             openAlert(msg);
             /*window.open('https://map.kakao.com/link/to/서울 신라호텔,37.5575055053737,127.007952910656','kakaomap','');*/
-            Kakao.Navi.share({
+            Kakao.Navi.start({
                 name: mp_hname,
                 x: mp_x,
                 y: mp_y,
