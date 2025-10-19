@@ -1,10 +1,29 @@
+import uuid, os
+
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
 from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here
+
+def invitation_image_upload_to(instance, filename):
+    """
+    모든 이미지(main, middle, end)를 같은 main 폴더에 저장.
+    경로 예시:
+    invitation/<username>/<invitation_id>/main/<uuid>.jpg
+    """
+    base, ext = os.path.splitext(filename)
+    username = slugify(getattr(instance.user, "username", "anon"))
+    invitation_id = instance.pk or "temp"  # 아직 저장 안 된 객체는 temp로
+
+    return f"invitation/{username}/{invitation_id}/main/{uuid.uuid4().hex}{ext.lower()}"
+
+
+
 class Invitation(models.Model):
     user = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_invitations" )
+    invitationname = models.CharField("초대장 이름", max_length=150, unique=True)
     groom_lastname = models.CharField("신랑 성", max_length=100)
     groom_firstname = models.CharField("신랑 이름", max_length=100)
     groom_bankname = models.CharField("은행명", max_length=50, blank=True)
@@ -18,16 +37,38 @@ class Invitation(models.Model):
     wedding_datetime = models.DateTimeField("결혼식 날짜")
     weddinghall_name = models.CharField("결혼식장 이름", max_length=100)
     weddinghall_info = models.CharField("웨딩홀 정보", max_length=200)
+    # ✅ 이미지 3개 (모두 main 폴더에 저장)
+    main_img = models.ImageField("메인 이미지", upload_to=invitation_image_upload_to, blank=True, null=True)
+    middle_img = models.ImageField("중간 이미지", upload_to=invitation_image_upload_to, blank=True, null=True)
+    end_img = models.ImageField("엔드 이미지", upload_to=invitation_image_upload_to, blank=True, null=True)
+
     created_at = models.DateTimeField("생성일", auto_now_add=True)
     update_at = models.DateTimeField("수정일", auto_now = True)
 
+
     class Meta:
         db_table = "app_invitation"
+
+    def __str__(self):
+        return f"{self.groom_lastname}{self.groom_firstname} ♥ {self.bride_lastname}{self.bride_firstname}"
 
 
 # ---------------------------
 # 모시는 글 (1:1)
 # ---------------------------
+
+def greeting_image_upload_to(instance, filename):
+    """
+    모든 이미지(main, middle, end)를 같은 main 폴더에 저장.
+    경로 예시:
+    invitation/<username>/<invitation_id>/main/<uuid>.jpg
+    """
+    base, ext = os.path.splitext(filename)
+    username = slugify(getattr(instance.invitation.user, "username", "anon"))
+    invitation_id = instance.invitation.pk or "temp"  # 아직 저장 안 된 객체는 temp로
+
+    return f"invitation/{username}/{invitation_id}/greeting/{uuid.uuid4().hex}{ext.lower()}"
+
 class InvitationGreeting(models.Model):
     invitation = models.OneToOneField(
         Invitation,
@@ -37,6 +78,7 @@ class InvitationGreeting(models.Model):
     title = models.CharField(max_length=200, blank=True)
     subtitle = models.CharField(max_length=200, blank=True)
     body = models.TextField(blank=True)
+    greeting_img = models.ImageField("인사말 이미지", upload_to=greeting_image_upload_to, blank=True, null=True)
 
     def __str__(self):
         return f"Greeting for Invitation {self.invitation_id}"
@@ -118,6 +160,28 @@ class InvitationCalendar(models.Model):
 #   - 사진 1장 = 레코드 1개
 #   - (invitation, order) 인덱스 + 유니크로 순서/메인 안정화
 # ---------------------------
+
+def gallery_upload_to(instance, filename):
+    """
+    초대(invitation)와 연결된 사용자별로 갤러리 이미지를 저장하는 경로를 동적으로 반환.
+    결과 예시:
+    media/invitation/<username>/<invitation_id>/gallery/<uuid>.jpg
+    """
+    base, ext = os.path.splitext(filename)
+    invitation = getattr(instance, "invitation", None)
+
+    # 사용자 이름 (slugify로 안전하게)
+    user_slug = "anonymous"
+    invitation_id = "temp"
+
+    if invitation:
+        if getattr(invitation, "user", None):
+            username = getattr(invitation.user, "username", None) or str(invitation.user_id or "")
+            user_slug = slugify(username) or str(invitation.user_id)
+        invitation_id = str(invitation.pk or "temp")
+
+    return f"invitation/{user_slug}/{invitation_id}/gallery/{uuid.uuid4().hex}{ext.lower()}"
+
 class InvitationGallery(models.Model):
     invitation = models.ForeignKey(
         Invitation,
@@ -125,7 +189,7 @@ class InvitationGallery(models.Model):
         related_name="gallery",
     )
     image = models.ImageField(  # ✅ CharField 대신 ImageField
-        upload_to="invitation/gallery/",
+        upload_to=gallery_upload_to,
         blank=True,
         null=True,
         verbose_name="갤러리 이미지"
@@ -161,6 +225,19 @@ class InvitationGallery(models.Model):
 #   - 카카오(다음) 주소/우편번호 API 응답 필드에 맞춰 구성
 #   - ERD에 보이는 다수의 문자열 필드들을 CharField/BooleanField로 매핑
 # ---------------------------
+
+def map_image_upload_to(instance, filename):
+    """
+    모든 이미지(main, middle, end)를 같은 main 폴더에 저장.
+    경로 예시:
+    invitation/<username>/<invitation_id>/main/<uuid>.jpg
+    """
+    base, ext = os.path.splitext(filename)
+    username = slugify(getattr(instance.invitation.user, "username", "anon"))
+    invitation_id = instance.invitation.pk or "temp"  # 아직 저장 안 된 객체는 temp로
+
+    return f"invitation/{username}/{invitation_id}/map/{uuid.uuid4().hex}{ext.lower()}"
+
 class InvitationMap(models.Model):
     invitation = models.OneToOneField(
         Invitation,
@@ -214,6 +291,7 @@ class InvitationMap(models.Model):
     lat = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True)
     lng = models.DecimalField(max_digits=15, decimal_places=10, null=True, blank=True)
     # map_url = models.CharField(max_length=500, blank=True)
+    map_img = models.ImageField("약도 이미지", upload_to=map_image_upload_to, blank=True, null=True)
 
     createdate = models.DateTimeField(auto_now_add=True)
 

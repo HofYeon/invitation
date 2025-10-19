@@ -1296,7 +1296,7 @@ $("#interview_pop .x_button").click(function(){
                     </div>
                     <div class="main-img-parent">
                         <i class="rpd rpd01"></i><i class="rpd rpd02"></i><i class="rpd rpd03"></i><i class="rpd rpd04"></i>
-                        <img src="https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/JBFqgzAJJK.png?f=webp&amp;w=1280">
+                        <img src="{{ invitation.main_img.url }}">
                         <div class="imgCover"></div>
                     </div>
                     <div class="wave bottom">
@@ -1374,7 +1374,7 @@ $("#interview_pop .x_button").click(function(){
 
                     <div class="intro_middle_img anibox hd visible animated fadeInUp" style="padding-bottom: 15px;">
                 <div class="imgCover"></div>
-                <img src="https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/8OrytBil4u.jpg?f=webp&amp;w=1280">
+                <img src="{{ greeting.greeting_img.url }}">
             </div>
 
 
@@ -1872,6 +1872,11 @@ $("#interview_pop .x_button").click(function(){
 <!--                    <p><span style="color:#0d347f;">●</span> 간선버스 : 301, 342, 472</p><p><span style="color:#3b9f37;">●</span> 지선버스 : 3011, 4312</p><p>&nbsp;</p><p>영동고교 앞 하차 후 학동사거리 방면 100M 내 건물</p>                </li>-->
 
 		</ul>
+        {% if map.map_img %}
+            <img src="{{ map.map_img.url }}" alt="약도 이미지">
+        {% else %}
+            <p>지도 이미지가 없습니다.</p>
+        {% endif %}
 
 	</div>
     <div class="sectionMg layer anibox clearfix hd">
@@ -1895,7 +1900,7 @@ $("#interview_pop .x_button").click(function(){
             </svg>
         </div>
 
-        <img src="https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/vixc85CXww.png?f=webp&amp;w=1280">
+        <img src="{{ invitation.middle_img.url }}">
 
         <div class="wave bottom">
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
@@ -2078,74 +2083,78 @@ $("#interview_pop .x_button").click(function(){
 
     <!-- 신랑,신부 계좌번호 토글 -->
     <div class="group-in-content" style="height:30%;">
-            {{invitation.groom_account}}
             <div class="gcontents gt-1 active swiper-initialized swiper-horizontal swiper-backface-hidden">
                 <div class="gc1 swiper-wrapper" id="swiper-wrapper-4974c9f5262de3b1" aria-live="polite" style="cursor: grab; transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
-                        {% if invitation.groom_account %}
-                            <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 3" style="margin-right: 16px;">
+                        {% for groom_account in groom_accounts %}
+                            <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="{{ forloop.counter }}/{{ groom_total }}" style="margin-right: 16px;">
                                 <div class="a-name">
-                                    김진호
+                                     {{ groom_account.holder }}
                                 </div>
-                                <a class="a-account" onclick="copy_to_clipboard2('actnm-1-1')">
-                                    <span>신한은행</span>
-                                    <span>110-000-00000</span>
+                                <a class="a-account" onclick="copy_to_clipboard2('actnm-1-{{ forloop.counter }}')">
+                                    <span>{{ groom_account.bank }}</span>
+                                    <span>{{ groom_account.account }}</span>
                                     <img src="{{ MEDIA_URL }}img/copy.svg">
-                                    <textarea id="actnm-1-1" class="txtnone">신한은행 110-000-00000</textarea>
+                                    <textarea id="actnm-1-{{ forloop.counter }}" class="txtnone">{{ groom_account.bank }} {{ groom_account.account }}</textarea>
                                 </a>
                                 <div class="buttns">
                                                                         <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
                                                                                                 </div>
                             </div>
-                        {% endif %}
+                        {% endfor %}
 
-                                                                                            <div class="acbox swiper-slide swiper-slide-next" role="group" aria-label="2 / 3" style="margin-right: 16px;">
-                            <div class="a-name">
-                                김건호
-                            </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-2')">
-                                <span>우리은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-1-2" class="txtnone">우리은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
-                                                                                            <div class="acbox swiper-slide" role="group" aria-label="3 / 3" style="margin-right: 16px;">
-                            <div class="a-name">
-                                이미자
-                            </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-3')">
-                                <span>하나은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-1-3" class="txtnone">하나은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
+<!--                    <div class="acbox swiper-slide swiper-slide-next" role="group" aria-label="2 / 3" style="margin-right: 16px;">-->
+<!--                            <div class="a-name">-->
+<!--                                김건호-->
+<!--                            </div>-->
+<!--                            <a class="a-account" onclick="copy_to_clipboard2('actnm-1-2')">-->
+<!--                                <span>우리은행</span>-->
+<!--                                <span>110-000-00000</span>-->
+<!--                                <img src="{{ MEDIA_URL }}img/copy.svg">-->
+<!--                                <textarea id="actnm-1-2" class="txtnone">우리은행 110-000-00000</textarea>-->
+<!--                            </a>-->
+<!--                            <div class="buttns">-->
+<!--                                        <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>-->
+<!--                                                </div>-->
+<!--                        </div>-->
+
                     </div>
                 <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
             <div class="gcontents gt-2 swiper-initialized swiper-horizontal swiper-backface-hidden">
                 <div class="gc1 swiper-wrapper" id="swiper-wrapper-d955d60f23305331" aria-live="polite" style="transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
-                                                                    <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 1" style="margin-right: 16px;">
-                            <div class="a-name">
-                                이나은
+<!--                        <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="1 / 1" style="margin-right: 16px;">-->
+<!--                            <div class="a-name">-->
+<!--                                이나은-->
+<!--                            </div>-->
+<!--                            <a class="a-account" onclick="copy_to_clipboard2('actnm-2-1')">-->
+<!--                                <span>하나은행</span>-->
+<!--                                <span>110-000-00000</span>-->
+<!--                                <img src="{{ MEDIA_URL }}img/copy.svg">-->
+<!--                                <textarea id="actnm-2-1" class="txtnone">하나은행 110-000-00000</textarea>-->
+<!--                            </a>-->
+<!--                            <div class="buttns">-->
+<!--                                        <a href="https://qr.kakaopay.com/"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>-->
+<!--                                </div>-->
+<!--                        </div>-->
+
+                         {% for bride_account in bride_accounts %}
+                            <div class="acbox swiper-slide swiper-slide-active" role="group" aria-label="{{ forloop.counter }}/{{ bride_total }}" style="margin-right: 16px;">
+                                <div class="a-name">
+                                     {{ bride_account.holder }}
+                                </div>
+                                <a class="a-account" onclick="copy_to_clipboard2('actnm-2-{{ forloop.counter }}')">
+                                    <span>{{ bride_account.bank }}</span>
+                                    <span>{{ bride_account.account }}</span>
+                                    <img src="{{ MEDIA_URL }}img/copy.svg">
+                                    <textarea id="actnm-2-{{ forloop.counter }}" class="txtnone">{{ bride_account.bank }} {{ bride_account.account }}</textarea>
+                                </a>
+                                <div class="buttns">
+                                    <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
+                                </div>
                             </div>
-                            <a class="a-account" onclick="copy_to_clipboard2('actnm-2-1')">
-                                <span>하나은행</span>
-                                <span>110-000-00000</span>
-                                <img src="{{ MEDIA_URL }}img/copy.svg">
-                                <textarea id="actnm-2-1" class="txtnone">하나은행 110-000-00000</textarea>
-                            </a>
-                            <div class="buttns">
-                                                                    <a href="https://qr.kakaopay.com/281006011000000310267128"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                            </div>
-                        </div>
-                                                            </div>
+                        {% endfor %}
+
+                </div>
             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
 
@@ -2911,7 +2920,7 @@ $(document).ready(function(){
     </div>
 
     <div class="banner01 auto" style="background-image: url('https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/5kW8HzVeDY.png?f=webp&amp;w=1280');">
-                    <img class="imgblk" src="https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/5kW8HzVeDY.png?f=webp&amp;w=1280">
+                    <img class="imgblk" src="{{ invitation.end_img.url }}">
 
         <div class="cover" style="overflow: hidden;">
             <div class="vcenterbox" style="text-align: ">
