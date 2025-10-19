@@ -3128,10 +3128,13 @@ $(document).ready(function(){
 
 function sendLink() {
 
-    Kakao.Link.createScrapButton({
-        container: '#kakao-link-btn',
-        requestUrl: 'https://yeon-mintcard.shop/invitation/card/realholovejihye/',
-        templateId : 125177
+    Kakao.Share.sendCustom({
+      templateId: 125177,
+      templateArgs: {
+        title: '[최진호❤김지혜 결혼합니다]',
+        description: '11월22일(토)오전11시\n' +
+            '안산 엠블던 호텔 3F 루시아홀',
+      },
     });
 }
 
