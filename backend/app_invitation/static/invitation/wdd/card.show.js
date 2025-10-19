@@ -250,9 +250,9 @@ function fnCallWeb2App(type) {
             openAlert(msg);
             /*window.open('https://map.kakao.com/link/to/서울 신라호텔,37.5575055053737,127.007952910656','kakaomap','');*/
             Kakao.Navi.start({
-                name: mp_hname,
-                x: mp_x,
-                y: mp_y,
+                name: '현대백화점 판교점',
+                x: 127.11205203011632,
+                y: 37.39279717586919,
                 coordType: 'wgs84'
             });
             break;
