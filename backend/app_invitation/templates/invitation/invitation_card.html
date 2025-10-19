@@ -1,7 +1,7 @@
 {% load static %}
 <html class="basic" lang="ko"><head>
-    <meta property="og:image" content="https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/JBFqgzAJJK.png?w=1280">
-    <meta name="twitter:image" content="https://images.theirmood.com/resources/46097/card/9Vr0MZLBrt/JBFqgzAJJK.png?w=1280">
+    <meta property="og:image" content="{{ invitation.main_img.url }}">
+    <meta name="twitter:image" content="{{ invitation.main_img.url }}">
     <meta name="description" content=" ">
     <meta property="og:description" content=" ">
     <meta name="twitter:description" content=" ">
@@ -250,7 +250,6 @@ ul.wayto li.li .n {font-size: 1.5rem; color: #000; letter-spacing: -.03em; margi
 
 
 <!--    <link rel="stylesheet" href="{% static 'invitation/css/all.min.css' %}"  loading="lazy">-->
-R
     <script type="text/javascript" src="{% static 'invitation/js/jquery-1.11.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'invitation/js/jquery.form.js' %}"></script>
     <script type="text/javascript" src="{% static 'invitation/js/jquery.viewportchecker.js'  %}"></script>
