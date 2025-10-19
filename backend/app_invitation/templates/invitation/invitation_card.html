@@ -1,11 +1,11 @@
 {% load static %}
 <html class="basic" lang="ko"><head>
-    <meta property="og:image" content="{{ invitation.main_img.url }}">
-    <meta name="twitter:image" content="{{ invitation.main_img.url }}">
+    <meta property="og:image" content="{{ request.build_absolute_uri(invitation.main_img.url) }}">
+    <meta name="twitter:image" content="{{ request.build_absolute_uri(invitation.main_img.url) }}">
     <meta name="description" content=" ">
     <meta property="og:description" content=" ">
     <meta name="twitter:description" content=" ">
-    <meta property="og:title" content="{{invitation.wedding_datetime|date:"m"}}월 {{invitation.wedding_datetime|date:"d"}}일 {{invitation.groom_lastname}}{{invitation.groom_firstname}} ♥ {{invitation.bride_lastname}}{{invitation.bride_firstname}} 결혼합니다.">
+    <meta property="og:title" content="{{invitation.wedding_datetime|date:'m'}}월 {{invitation.wedding_datetime|date:'d'}}일 {{invitation.groom_lastname}}{{invitation.groom_firstname}} ♥ {{invitation.bride_lastname}}{{invitation.bride_firstname}} 결혼합니다.">
 
 
     <title>{{invitation.wedding_datetime|date:"m"}}월 {{invitation.wedding_datetime|date:"d"}}일 {{invitation.groom_lastname}}{{invitation.groom_firstname}} ♥ {{invitation.bride_lastname}}{{invitation.bride_firstname}} 결혼합니다.</title>
