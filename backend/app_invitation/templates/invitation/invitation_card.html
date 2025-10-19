@@ -3126,7 +3126,7 @@ $(document).ready(function(){
 // 카톡 초대장 보내기
 if($("#kakao-link-btn").is(":visible")) {
     try{
-        Kakao.init('52425f3a38deda9d41a51713185285c1');
+        Kakao.init('5709891a2c310e910f34bfad3d87cefc');
 
         function sendLink() {
             var t = $("input[name=kt_01]").val();
@@ -3136,15 +3136,11 @@ if($("#kakao-link-btn").is(":visible")) {
             if(!kImg.includes('http')) {
                 kImg = "https://yeon-mintcard.shop"+kImg;
             }
-
-            Kakao.Share.sendCustom({
-            templateId: 125177,            templateArgs: {
-                idx: "9Vr0MZLBrt",
-                img: kImg,
-                title: t,
-                description: d
-            },
-            })
+            Kakao.Link.createScrapButton({
+                container: '#kakao-link-btn',
+                requestUrl: 'https://yeon-mintcard.shop/invitation/card/realholovejihye/',
+                templateId : 125177
+            });
         }
     }catch {
 
@@ -3484,19 +3480,19 @@ $(document).ready(function() {
     }
 
 
-    if($(".books-swiper").is(":visible")) {
-        new Swiper('.books-swiper', {
-            slidesPerView: "auto",
-            spaceBetween: 10,
-            pagination: {
-                el: ".books-swiper .swiper-pagination",
-                clickable: true,
-            },
-        });
-    }
+    // if($(".books-swiper").is(":visible")) {
+    //     new Swiper('.books-swiper', {
+    //         slidesPerView: "auto",
+    //         spaceBetween: 10,
+    //         pagination: {
+    //             el: ".books-swiper .swiper-pagination",
+    //             clickable: true,
+    //         },
+    //     });
+    // }
 
 
-    loadBooks();
+    // loadBooks();
 
 
 
