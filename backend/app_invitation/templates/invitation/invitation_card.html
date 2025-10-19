@@ -3124,29 +3124,17 @@ $(document).ready(function(){
 
 //=============================================
 // 카톡 초대장 보내기
-if($("#kakao-link-btn").is(":visible")) {
-    try{
-        Kakao.init('5709891a2c310e910f34bfad3d87cefc');
+Kakao.init('5709891a2c310e910f34bfad3d87cefc');
 
-        function sendLink() {
-            var t = $("input[name=kt_01]").val();
-            var d = $("input[name=kt_02]").val();
+function sendLink() {
 
-            var kImg = '{{ invitation.main_img.url }}';
-            if(!kImg.includes('http')) {
-                kImg = "https://yeon-mintcard.shop"+kImg;
-            }
-            Kakao.Link.createScrapButton({
-                container: '#kakao-link-btn',
-                requestUrl: 'https://yeon-mintcard.shop/invitation/card/realholovejihye/',
-                templateId : 125177
-            });
-        }
-    }catch {
-
-    }
-
+    Kakao.Link.createScrapButton({
+        container: '#kakao-link-btn',
+        requestUrl: 'https://yeon-mintcard.shop/invitation/card/realholovejihye/',
+        templateId : 125177
+    });
 }
+
 
 //=============================================
 // 식전영상
