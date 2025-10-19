@@ -24,6 +24,7 @@ db_data/           # (docker-compose에서 볼륨으로 지정했다면 제외)
 docker-compose.yml
 frontend/Dockerfile
 backend/Dockerfile
+docker-compose.yml.hong.old
 
 # Env
 .env
