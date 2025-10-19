@@ -28,8 +28,14 @@ SECRET_KEY = os.getenv("DJANGO_SECRET", "dev-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["34.170.194.91"]
-CSRF_TRUSTED_ORIGINS = ["https://34.170.194.91"]
+ALLOWED_HOSTS = [
+    "yeon-mintcard.shop",
+    "www.yeon-mintcard.shop"
+    ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://yeon-mintcard.shop",
+    "https://www.yeon-mintcard.shop"
+    ]
 
 
 # Application definition
