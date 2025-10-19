@@ -36,26 +36,13 @@ services:
       - .:/app/invitation
     expose:
       - "8000"
+    ports:
+      - "127.0.0.1:8000:8000"
     depends_on:
       - db
     networks:
       - app_network
 
-  nginx:
-    image: nginx:latest
-    container_name: myapp-nginx
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - .:/app/invitation
-      - ./ssl:/etc/nginx/ssl
-    depends_on:
-      - backend
-    networks:
-      - app_network
 
 networks:
   app_network:
