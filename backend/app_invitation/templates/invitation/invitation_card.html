@@ -1021,33 +1021,11 @@ $(".popAlert .background, .popAlert button").click(function(){
                         <span class="baptismal"></span>
                     </span>
                     <span class="cell">
-                        <a class="fa fa-phone-alt" href="tel:010-5029-2513"></a>
-                        <a class="fa fa-envelope" href="sms:010-5029-2513"></a>
+                        <a class="fa fa-phone-alt" href="tel:{{invitation.groom_phone}}"></a>
+                        <a class="fa fa-envelope" href="sms:{{invitation.groom_phone}}"></a>
                     </span>
                 </div>
-                                                <div class="grd">
-                    <span class="cell">신랑 아버지</span>
-                    <span class="cell name">
-                        <span>김건호</span>
-                        <span class="baptismal"></span>
-                    </span>
-                    <span class="cell">
-                        <a class="fa fa-phone-alt" href="tel:010-0000-0000"></a>
-                        <a class="fa fa-envelope" href="sms:010-0000-0000"></a>
-                    </span>
-                </div>
-                                                <div class="grd">
-                    <span class="cell">신랑 어머니</span>
-                    <span class="cell name">
-                        <span>이미자</span>
-                        <span class="baptismal"></span>
-                    </span>
-                    <span class="cell">
-                        <a class="fa fa-phone-alt" href="tel:010-0000-0000"></a>
-                        <a class="fa fa-envelope" href="sms:010-0000-0000"></a>
-                    </span>
-                </div>
-                            </div>
+            </div>
 
                 <div class="grd_wrap man">
             <div class="grd_line">
@@ -1060,33 +1038,11 @@ $(".popAlert .background, .popAlert button").click(function(){
                     <span class="baptismal"></span>
                 </span>
                 <span class="cell">
-                    <a class="fa fa-phone-alt" href="tel:010-0000-0000"></a>
-                    <a class="fa fa-envelope" href="sms:010-0000-0000"></a>
+                    <a class="fa fa-phone-alt" href="tel:{{invitation.bride_phone}}"></a>
+                    <a class="fa fa-envelope" href="sms:{{invitation.bride_phone}}"></a>
                 </span>
             </div>
-                                    <div class="grd">
-                <span class="cell">신부 아버지</span>
-                <span class="cell name">
-                    <span>이주명</span>
-                    <span class="baptismal"></span>
-                </span>
-                <span class="cell">
-                    <a class="fa fa-phone-alt" href="tel:010-0000-0000"></a>
-                    <a class="fa fa-envelope" href="sms:010-0000-0000"></a>
-                </span>
             </div>
-                                    <div class="grd">
-                <span class="cell">신부 어머니</span>
-                <span class="cell name">
-                    <span>유수지</span>
-                    <span class="baptismal"></span>
-                </span>
-                <span class="cell">
-                    <a class="fa fa-phone-alt" href="tel:010-0000-0000"></a>
-                    <a class="fa fa-envelope" href="sms:010-0000-0000"></a>
-                </span>
-            </div>
-                    </div>
 
 
 
@@ -2096,9 +2052,9 @@ $("#interview_pop .x_button").click(function(){
                                     <img src="{{ MEDIA_URL }}img/copy.svg">
                                     <textarea id="actnm-1-{{ forloop.counter }}" class="txtnone">{{ groom_account.bank }} {{ groom_account.account }}</textarea>
                                 </a>
-                                <div class="buttns">
-                                                                        <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>
-                                                                                                </div>
+<!--                                <div class="buttns">-->
+<!--                                                                        <a href="https://qr.kakaopay.com"><span class="c"><img src="{{ MEDIA_URL }}img/pay-kakao.svg"></span><span>카카오페이</span></a>-->
+<!--                                                                                                </div>-->
                             </div>
                         {% endfor %}
 
