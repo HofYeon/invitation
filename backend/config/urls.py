@@ -24,7 +24,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', lambda request: redirect('card', invitationname='realholovejihye')),
+    path('', lambda request: redirect('invitation:card', invitationname='realholovejihye')),
     path("admin/", admin.site.urls),
     path("api/ping/", ping),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
