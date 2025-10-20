@@ -248,7 +248,9 @@ ul.wayto li.li .n {font-size: 1.5rem; color: #000; letter-spacing: -.03em; margi
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="{% static 'invitation/swiper/swiper.bundle.css' %}" >
 
-
+    <!-- Swiper CSS/JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!--    <link rel="stylesheet" href="{% static 'invitation/css/all.min.css' %}"  loading="lazy">-->
     <script type="text/javascript" src="{% static 'invitation/js/jquery-1.11.1.min.js' %}"></script>
@@ -312,6 +314,34 @@ ul.wayto li.li .n {font-size: 1.5rem; color: #000; letter-spacing: -.03em; margi
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" class="drag-prevent clearfix tel_type_v1   ft-gowundodum basic theme_emp_color_purple theme_font_basic title_eng_writing bg_theme_white" style="">
 
+<!-- Swiper Lightbox Modal 갤러리 모달 gallery modal -->
+        <div id="lightbox" class="lightbox" aria-hidden="true">
+          <div class="lightbox__backdrop"></div>
+
+          <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Image viewer">
+            <button class="lightbox__close" aria-label="닫기" type="button">×</button>
+
+            <!-- 메인 뷰어 -->
+            <div class="swiper main-swiper">
+              <div class="swiper-wrapper">
+                {% for img in gallery %}
+                <div class="swiper-slide">
+                  <div class="swiper-zoom-container">
+                    <img src="{{ img.image.url }}?f=webp&w=1600" alt="{{ img.alt|default:'image' }}" loading="lazy">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+
+              <!-- 좌우 네비 -->
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+
+              <!-- 순서/페이지 표시 -->
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
 
 <style>
 .lds-roller {
@@ -995,6 +1025,60 @@ $(".popAlert .background, .popAlert button").click(function(){
 </script>
 
 <div id="tel_popup">
+
+<!--    연락처 팝업 아이콘 사이즈 조정-->
+    <style>
+    .contact-icon {
+      width: 60%;          /* 🔹 아이콘 크기 조정 (20~24px 정도가 딱 보기 좋음) */
+      height: 60%;
+      vertical-align: middle;
+      object-fit: contain;   /* 아이콘이 찌그러지지 않게 */
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      opacity: 0.9;
+    }
+
+    a:hover .contact-icon {
+      transform: scale(1.1); /* 살짝 확대 효과 */
+      opacity: 1;
+    }
+
+    /* a 태그 간격 살짝 띄우기 */
+    a + a {
+      margin-left: 10px;
+    }
+
+    .grd .cell:last-child {
+      display: flex;          /* ✅ 내부 a 태그들을 가로로 정렬 */
+      align-items: center;    /* 수직 중앙정렬 */
+      gap: 8px;               /* 아이콘 사이 간격 */
+      flex: 0 0 auto;         /* 셀 자체 크기 고정 */
+      white-space: nowrap;    /* 줄바꿈 방지 */
+    }
+
+    /* a태그 (혹시 전역 .fa 영향 있으면 inline-flex로) */
+    .grd .cell:last-child a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+    }
+
+    /* 아이콘 크기 통일 */
+    .contact-icon {
+      width: 20px;
+      height: 20px;
+      display: block;
+      object-fit: contain;
+    }
+
+
+
+
+    </style>
+
+
     <a class="x_button">
         <svg width="45" height="45" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7.86018 16.829L16.3455 8.34375" stroke="#cccccc" stroke-width="1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -1014,15 +1098,19 @@ $(".popAlert .background, .popAlert button").click(function(){
                 <div class="grd_line">
                     신랑측 <span class="ent">GROOM</span>
                 </div>
-                                <div class="grd">
+                    <div class="grd">
                     <span class="cell">신랑</span>
                     <span class="cell name">
                         <span>{{invitation.groom_lastname}}{{invitation.groom_firstname}}</span>
                         <span class="baptismal"></span>
                     </span>
                     <span class="cell">
-                        <a class="fa fa-phone-alt" href="tel:{{invitation.groom_phone}}"></a>
-                        <a class="fa fa-envelope" href="sms:{{invitation.groom_phone}}"></a>
+                        <a class="fa fa-tel-alt" href="tel:{{invitation.groom_phone}}">
+                            <img src="{{ MEDIA_URL }}img/card/tel_icon.png" alt="전화" class="contact-icon">
+                        </a>
+                        <a class="fa fa-envelope" href="sms:{{invitation.groom_phone}}">
+                            <img src="{{ MEDIA_URL }}img/card/sms_icon.png" alt="문자" class="contact-icon">
+                        </a>
                     </span>
                 </div>
             </div>
@@ -1034,12 +1122,16 @@ $(".popAlert .background, .popAlert button").click(function(){
                         <div class="grd">
                 <span class="cell">신부</span>
                 <span class="cell name">
-                    <span>이나은</span>
+                    <span>{{invitation.bride_lastname}}{{invitation.bride_firstname}}</span>
                     <span class="baptismal"></span>
                 </span>
                 <span class="cell">
-                    <a class="fa fa-phone-alt" href="tel:{{invitation.bride_phone}}"></a>
-                    <a class="fa fa-envelope" href="sms:{{invitation.bride_phone}}"></a>
+                    <a class="fa fa-tel-alt" href="tel:{{invitation.bride_phone}}">
+                        <img src="{{ MEDIA_URL }}img/card/tel_icon.png" alt="전화" class="contact-icon">
+                    </a>
+                    <a class="fa fa-envelope" href="sms:{{invitation.bride_phone}}">
+                        <img src="{{ MEDIA_URL }}img/card/sms_icon.png" alt="문자" class="contact-icon">
+                    </a>
                 </span>
             </div>
             </div>
@@ -1398,7 +1490,7 @@ $("#interview_pop .x_button").click(function(){
                     </div>
 
                     <div class="telArea">
-                <a class="int_buttn" onclick="openContactPop()"><i class="fa fa-phone-alt"></i>&nbsp;연락하기</a>
+                <a class="int_buttn" onclick="openContactPop()"><i class="fa fa-tel-alt"></i>&nbsp;연락하기</a>
             </div>
 
 
@@ -1445,6 +1537,94 @@ $("#interview_pop .x_button").click(function(){
 
 
     <div class="sectionMg gallLayerWrapper layer layer03 clearfix">
+<!--        갤러리 확대 기능 스타일 및 스크립트 -->
+        <style>
+
+            .lightbox{position:fixed; inset:0; width:100%; height:100%; display:none; z-index:1000;}
+            .lightbox.is-open{display:block;}
+            .lightbox__backdrop{position:absolute; inset:0; background:rgba(200,200,200,.8); backdrop-filter:blur(3px);}
+            .lightbox__dialog{position:absolute; inset:0; display:grid; place-items:center; padding:24px;}
+
+            .lightbox__close{
+              position:absolute; top:12px; right:16px; z-index:1001;
+              width:40px; height:40px; border:0; border-radius:50%;
+              background-color: transparent;
+              box-shadow: none; color:#fff; font-size:24px; cursor:pointer;
+            }
+
+            .main-swiper{width:90vw; height:85vh;}
+            .main-swiper .swiper-slide {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: transparent;
+                }
+
+            /* 이미지 크기보다 큰 영역이 자연스럽게 배경에 녹도록 */
+                .main-swiper img {
+                  max-width: 100%;
+                  max-height: 100%;
+                  object-fit: contain;
+                  background: transparent;
+                }
+
+            /* Swiper 버튼/페이지 */
+            .main-swiper .swiper-button-prev,
+            .main-swiper .swiper-button-next {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 44px;           /* 버튼 크기 고정 */
+              height: 44px;
+              min-width: 44px;
+              min-height: 44px;
+              border-radius: 50%;
+              background-color: transparent;
+              box-shadow: none;
+              z-index: 1002;
+              cursor: pointer;
+              transition: background 0.2s ease;
+            }
+
+            /* 위치 고정 (화면에 따라 일정한 거리 유지) */
+            .main-swiper .swiper-button-prev {
+              left: 30px;  /* 화면 왼쪽에서 30px */
+            }
+            .main-swiper .swiper-button-next {
+              right: 30px; /* 화면 오른쪽에서 30px */
+            }
+
+            /* 아이콘 (기본 Swiper 화살표) */
+            .main-swiper .swiper-button-prev::after,
+            .main-swiper .swiper-button-next::after {
+              font-size: 22px;      /* 항상 같은 크기 유지 */
+              color: #fff;
+              font-weight: 700;
+            }
+
+            /* 호버 시 밝게 */
+            .main-swiper .swiper-button-prev:hover,
+            .main-swiper .swiper-button-next:hover {
+              background-color: rgba(0,0,0,0.4);
+            }
+            .swiper-pagination{color:#fff;}
+            @media (max-width:768px){
+              .main-swiper{width:100vw; height:80vh;}
+                main-swiper .swiper-button-prev,
+                  .main-swiper .swiper-button-next {
+                    width: 44px;
+                    height: 44px;
+                  }
+                  .main-swiper .swiper-button-prev { left: 15px; }
+                  .main-swiper .swiper-button-next { right: 15px; }
+            }
+            body.no-scroll{overflow:hidden;}
+            /* 버튼 비활성화 상태 */
+.main-swiper .swiper-button-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+        </style>
 
 <div class="sectionHead anibox hd visible animated fadeInUp full-visible" style="padding: 30px 0px 30px 0px">
     <div class="enstr">GALLERY</div>
@@ -1455,8 +1635,8 @@ $("#interview_pop .x_button").click(function(){
 
         <div class="gallGridWrapper multiple ratio twoRow" style="height: 200px;">
             {% for img in gallery %}
-                 <div class="item" style="background-image: url('{{ img.image.url }}?f=webp&w=500'); grid-area: span 2">
-                     <img src="{{ MEDIA_URL }}img/card/vertical.png" class="box rectangle">
+                 <div class="item" data-index="{{ forloop.counter0 }}" style="background-image: url('{{ img.image.url }}?f=webp&w=500'); grid-area: span 2">
+                     <img src="{{ MEDIA_URL }}img/card/vertical.png"   data-full="{{ img.image.url }}" class="box rectangle" loading="lazy">
                  </div>
               {% empty %}
                 <p>아직 등록된 사진이 없습니다.</p>
@@ -1488,12 +1668,63 @@ $("#interview_pop .x_button").click(function(){
 <!--                        </div>     -->
             </div>
 
-                    <div class="moreBtnWrap" style="position: relative;">
+
+
+
+
+            <div class="moreBtnWrap" style="position: relative;">
                 <div class="moreBtnGradient" style="position: absolute;width: 100%;height: 100px;bottom: 100%;"></div>
                 <p class="moreBnt grdMoreBnt" onclick="gallMore(this)" style="color: #544f4f">
                     더보기&nbsp;&nbsp;<i class="fa fa-chevron-down" style="color: #777;"></i>
                 </p>
             </div>
+
+
+
+
+        <script>
+        $(function () {
+          var $lightbox = $('#lightbox');
+          var $galleryItems = $('#gallery .item');
+          var swiper;
+
+          function openModalAt(index){
+            if (!swiper) {
+              swiper = new Swiper('.main-swiper', {
+                loop: true,
+                zoom: true,
+                lazy: { loadPrevNext: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                pagination: { el: '.swiper-pagination', type: 'fraction' }, // 1/총개수 형태
+                keyboard: { enabled: true },
+              });
+            }
+            // 클릭한 실제 인덱스를 loop 기준 인덱스로 이동
+            swiper.slideToLoop(index, 0);
+            $lightbox.addClass('is-open').attr('aria-hidden', 'false');
+            $('body').addClass('no-scroll');
+          }
+
+          function closeModal(){
+            $lightbox.removeClass('is-open').attr('aria-hidden', 'true');
+            $('body').removeClass('no-scroll');
+          }
+
+          // 갤러리 아이템 클릭 → 해당 슬라이드로 열기
+          $(document).on('click', '.gallGridWrapper .item', function(){
+            var idx = parseInt($(this).data('index'), 10) || $galleryItems.index(this);
+            openModalAt(idx);
+          });
+
+          // 닫기: X 버튼 / 배경 클릭 / Esc
+          $lightbox.on('click', '.lightbox__close, .lightbox__backdrop', closeModal);
+          $(document).on('keydown', function(e){
+            if (!$lightbox.hasClass('is-open')) return;
+            if (e.key === 'Escape') closeModal();
+          });
+        });
+        </script>
+
         <script>
             let isGallOpen = false
             const gallMore = (e) => {
@@ -1568,7 +1799,7 @@ $("#interview_pop .x_button").click(function(){
                 setGrid()
             })
         </script>
-            </div>
+    </div>
     <!--<div class="pic_0_del clearfix" style="height: 70px;"></div>-->
 
 
@@ -1699,7 +1930,7 @@ $("#interview_pop .x_button").click(function(){
                 <div class="countdown ft-gowun-bold">
             <div>
                 <div class="desc">Days</div>
-                <span class="card data-days" style="width: auto;">8</span>
+                <span class="card data-days" style="width: auto;"></span>
             </div>
             <div>
                 <div class="desc">&nbsp;</div>
@@ -1707,7 +1938,7 @@ $("#interview_pop .x_button").click(function(){
             </div>
             <div>
                 <div class="desc">Hour</div>
-                <span class="card data-hour">13</span>
+                <span class="card data-hour"></span>
             </div>
             <div>
                 <div class="desc">&nbsp;</div>
@@ -1715,7 +1946,7 @@ $("#interview_pop .x_button").click(function(){
             </div>
             <div>
                 <div class="desc">Min</div>
-                <span class="card data-min">35</span>
+                <span class="card data-min"></span>
             </div>
             <div>
                 <div class="desc">&nbsp;</div>
@@ -1723,7 +1954,7 @@ $("#interview_pop .x_button").click(function(){
             </div>
             <div>
                 <div class="desc">Sec</div>
-                <span class="card data-sec">50</span>
+                <span class="card data-sec"></span>
             </div>
         </div>
                 <div class="subTitle v2 f18 call-comment ft-gowun-bold">
@@ -1747,7 +1978,7 @@ $("#interview_pop .x_button").click(function(){
         //clock.innerText = `${day}d ${hours}h ${minutes}m ${seconds}s`;
         */
         const now = moment()
-        const wday = moment('2025-11-22 12:30:00')
+        const wday = moment('2025-11-22 11:00:00')
 
         const day = parseInt(moment.duration(wday.diff(now)).asDays())
         const hours = moment.duration(wday.diff(now)).hours()
@@ -2038,7 +2269,7 @@ $("#interview_pop .x_button").click(function(){
     </div>
 
     <!-- 신랑,신부 계좌번호 토글 -->
-    <div class="group-in-content" style="height:30%;">
+    <div class="group-in-content" style="height:15%;">
             <div class="gcontents gt-1 active swiper-initialized swiper-horizontal swiper-backface-hidden">
                 <div class="gc1 swiper-wrapper" id="swiper-wrapper-4974c9f5262de3b1" aria-live="polite" style="cursor: grab; transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
                         {% for groom_account in groom_accounts %}
@@ -2903,10 +3134,10 @@ $(document).ready(function(){
     <!-- 하단 -->
 
     <div style="text-align: center;" class="ft-gowun-bold">
-        <div id="kakao-link-btn" onclick="sendLink()" style="padding: 30px 0 10px 0; margin-bottom: -10px; position: relative; z-index: 10; cursor: pointer;">
+        <div id="kakao-link-btn" onclick="sendLink()" style="padding: 30px 0 10px 0; margin-bottom: 10px; position: relative; z-index: 10; cursor: pointer;">
             <a class="kkt-share">카카오톡으로 초대장 보내기</a>
-            <input type="hidden" name="kt_01" value="10월 25일 김진호 ♥ 이나은 결혼합니다.">
-            <input type="hidden" name="kt_02" value="">
+<!--            <input type="hidden" name="kt_01" value="10월 25일 {{invitation.bride_lastname}}{{invitation.bride_firstname}} ♥ {{invitation.bride_lastname}}{{invitation.bride_firstname}} 결혼합니다.">-->
+<!--            <input type="hidden" name="kt_02" value="">-->
         </div>
     </div>
 
@@ -3320,9 +3551,9 @@ function swipeGallery02() {
         $(".layer01 .title2").css("padding-top", "0px");
     }
 }
-    $(".gallGridWrapper .item").click(function(){
-        zoomGallOpen($(this).index());
-    });
+    // $(".gallGridWrapper .item").click(function(){
+    //     zoomGallOpen($(this).index());
+    // });
 
 
 
