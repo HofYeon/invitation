@@ -168,7 +168,7 @@ function splash_v2(isBgm, isGarland) {
         renderer: 'svg',
         loop: false,
         autoplay: false,
-        path: "/src/bodymovin/v2.json"
+        path: ani_text_jsonUrl
     });
 
     // DOMLoaded 이벤트 리스너를 별도로 정의
