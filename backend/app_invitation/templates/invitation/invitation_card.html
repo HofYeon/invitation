@@ -1548,7 +1548,7 @@ $("#interview_pop .x_button").click(function(){
             .lightbox__close{
               position:absolute; top:12px; right:16px; z-index:1001;
               width:40px; height:40px; border:0; border-radius:50%;
-              background-color: transparent;
+               background-color: rgba(100, 100, 100, 0.3); /* 🔹 옅은 회색 반투명 */ color: #fff;
               box-shadow: none; color:#fff; font-size:24px; cursor:pointer;
             }
 
@@ -2269,7 +2269,7 @@ $("#interview_pop .x_button").click(function(){
     </div>
 
     <!-- 신랑,신부 계좌번호 토글 -->
-    <div class="group-in-content" style="height:15%;">
+    <div class="group-in-content" style="height:20%;">
             <div class="gcontents gt-1 active swiper-initialized swiper-horizontal swiper-backface-hidden">
                 <div class="gc1 swiper-wrapper" id="swiper-wrapper-4974c9f5262de3b1" aria-live="polite" style="cursor: grab; transition-duration: 0ms; transition-delay: 0ms; transform: translate3d(80.5px, 0px, 0px);">
                         {% for groom_account in groom_accounts %}
