@@ -48,6 +48,8 @@ class Invitation(models.Model):
 
     class Meta:
         db_table = "app_invitation"
+        verbose_name = "청첩장 기본 정보"
+        verbose_name_plural = "청첩장 기본 정보"
 
     def __str__(self):
         return f"{self.groom_lastname}{self.groom_firstname} ♥ {self.bride_lastname}{self.bride_firstname}"
@@ -85,6 +87,8 @@ class InvitationGreeting(models.Model):
 
     class Meta:
         db_table = "app_invitationgreeting"
+        verbose_name = "인사말"
+        verbose_name_plural = "인사말"
 # ---------------------------
 # 가족 소개 (1:N)
 #   - ERD의 choice(신랑/신부, 아버님/어머님)를 SmallInteger로 반영
@@ -138,6 +142,8 @@ class InvitationFamily(models.Model):
 
     class Meta:
         db_table = "app_invitationfamily"
+        verbose_name = "혼주 정보"
+        verbose_name_plural = "혼주 정보"
 
 # ---------------------------
 # 캘린더 (필요 시 확장; ERD에 맞춰 초대장 FK만)
@@ -154,6 +160,8 @@ class InvitationCalendar(models.Model):
 
     class Meta:
         db_table = "app_invitationcalendar"
+        verbose_name = "캘린더 - 건드릴 필요 없음"
+        verbose_name_plural = "캘린더 - 건드릴 필요 없음"
 
 # ---------------------------
 # 갤러리 (1:N)
@@ -218,6 +226,8 @@ class InvitationGallery(models.Model):
     
     class Meta:
         db_table = "app_invitationgallery"
+        verbose_name = "갤러리 사진 업로드"
+        verbose_name_plural = "갤러리 사진 업로드"
 
 
 # ---------------------------
@@ -300,6 +310,8 @@ class InvitationMap(models.Model):
     
     class Meta:
         db_table = "app_invitationmap"
+        verbose_name = "위치"
+        verbose_name_plural = "위치"
 
 
 
@@ -329,6 +341,8 @@ class Guestbook(models.Model):
 
     class Meta:
         db_table = "app_guestbook"
+        verbose_name = "방명록 - 건드릴 필요 없음"
+        verbose_name_plural = "방멱록 - 건드릴 필요 없음"
 
 
 #신랑, 신부측 계좌

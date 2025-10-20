@@ -49,6 +49,7 @@ class GreetingForm(forms.ModelForm):
 @admin.register(InvitationGreeting)
 class GreetingAdmin(admin.ModelAdmin):
     form = GreetingForm
+    list_display = ("id", "invitation")
 
 
 # ---------------------------
