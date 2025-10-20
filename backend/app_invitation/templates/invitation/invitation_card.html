@@ -311,9 +311,72 @@ ul.wayto li.li .n {font-size: 1.5rem; color: #000; letter-spacing: -.03em; margi
 
     </style>
 
+
+<link rel="preload"
+      href="{{ MEDIA_URL }}mp3/00.mp3"
+      as="audio"
+      type="audio/mpeg"
+      crossorigin>
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" class="drag-prevent clearfix tel_type_v1   ft-gowundodum basic theme_emp_color_purple theme_font_basic title_eng_writing bg_theme_white" style="">
+    <!-- 🔊 배경음악 -->
+<audio id="bgm" preload="auto" muted>
+  <source src="{{ MEDIA_URL }}mp3/00.mp3" type="audio/mpeg">
+</audio>
 
+<!-- 🔘 상단 제어 버튼 -->
+<div id="music-control">
+  <button id="musicToggle" class="on">🔊</button>
+</div>
+
+<style>
+#music-control {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 9999;
+}
+#musicToggle {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+</style>
+
+<script>
+$(function() {
+  const audio = $('#bgm')[0];
+  const btn = $('#musicToggle');
+
+  // ✅ 페이지 로드시 바로 재생 시도
+  audio.play().then(() => {
+    // 브라우저가 자동재생 허용하면 소리 켬
+    audio.muted = false;
+  }).catch(() => {
+    // 자동재생이 막힌 경우 클릭 시에만 소리 켜기
+    $(document).one('click', function() {
+      audio.muted = false;
+      audio.play();
+    });
+  });
+
+  // ✅ 버튼으로 on/off 제어
+  btn.on('click', function() {
+    if ($(this).hasClass('on')) {
+      audio.pause();
+      $(this).removeClass('on').text('🔇');
+    } else {
+      audio.play();
+      audio.muted = false;
+      $(this).addClass('on').text('🔊');
+    }
+  });
+});
+</script>
 <!-- Swiper Lightbox Modal 갤러리 모달 gallery modal -->
         <div id="lightbox" class="lightbox" aria-hidden="true">
           <div class="lightbox__backdrop"></div>
