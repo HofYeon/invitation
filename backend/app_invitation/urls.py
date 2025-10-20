@@ -5,7 +5,6 @@ from .views import InvitationCreateView, InvitationCardView, GuestbookCreateAPIV
 app_name = 'invitation'
 
 urlpatterns = [
-
     path('create/', InvitationCreateView.as_view(), name='create'),
     path('card/<str:invitationname>/', InvitationCardView.as_view(), name='card'),
     path('holiday', views.holiday_view, name='holiday'),

@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path, include
 from core.views import ping
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -23,6 +24,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', lambda request: redirect('card', invitationname='realholovejihye')),
     path("admin/", admin.site.urls),
     path("api/ping/", ping),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
