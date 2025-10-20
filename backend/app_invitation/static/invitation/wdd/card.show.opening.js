@@ -150,65 +150,65 @@ function splash_v1(isBgm, isGarland) {
 }
 
 // 오프닝 V2
-function splash_v2(isBgm, isGarland) {
-
-    offSplash();
-    const v2 = document.querySelector(".ltt_wrapper.v2");
-    if(v2) {
-        v2.style.display = 'block';
-    }
-
-    const splashElement = document.querySelector('#splash_v2_id');
-    splashElement.style.background = "transparent";
-    splashElement.classList.remove('keys');
-    void splashElement.offsetWidth; // 강제 리플로우 발생
-
-    G_ANI_LTT_OBJ = lottie.loadAnimation({
-        container: document.getElementById('opening-v2-text'),
-        renderer: 'svg',
-        loop: false,
-        autoplay: false,
-        path: ani_text_jsonUrl
-    });
-
-    // DOMLoaded 이벤트 리스너를 별도로 정의
-    function onDOMLoaded() {
-        G_ANI_LTT_OBJ.goToAndStop(0, true);
-        G_ANI_LTT_OBJ.play();
-        splashElement.classList.add("keys");
-    }
-
-    // complete 이벤트 리스너를 별도로 정의
-    function onAnimationComplete() {
-
-        // 새 animationend 이벤트 리스너 추가
-        function onAnimationEnd() {
-
-            splashElement.style.display = "none";
-            splashElement.removeEventListener('animationend', onAnimationEnd);  //console.log("제거");
-
-            if (isBgm) {
-                bgmAniFunc();
-                bgmStreaming();
-            }
-            if (isGarland) {
-                floatGarland();
-            }
-            if($("#pop_rsvp").hasClass("needShow")) {
-                $("#pop_rsvp").css("display", "block");
-            }
-            onScroll()
-        }
-        // 이전 animationend 이벤트 리스너 제거
-        splashElement.removeEventListener('animationend', onAnimationEnd);  //console.log("제거");
-        splashElement.addEventListener('animationend', onAnimationEnd);  //console.log("등록");
-    }
-
-    // 이벤트 리스너 등록
-    G_ANI_LTT_OBJ.addEventListener('DOMLoaded', onDOMLoaded);
-    G_ANI_LTT_OBJ.addEventListener('complete', onAnimationComplete);
-
-}
+// function splash_v2(isBgm, isGarland) {
+//
+//     offSplash();
+//     const v2 = document.querySelector(".ltt_wrapper.v2");
+//     if(v2) {
+//         v2.style.display = 'block';
+//     }
+//
+//     const splashElement = document.querySelector('#splash_v2_id');
+//     splashElement.style.background = "transparent";
+//     splashElement.classList.remove('keys');
+//     void splashElement.offsetWidth; // 강제 리플로우 발생
+//
+//     G_ANI_LTT_OBJ = lottie.loadAnimation({
+//         container: document.getElementById('opening-v2-text'),
+//         renderer: 'svg',
+//         loop: false,
+//         autoplay: false,
+//         path: "/src/bodymovin/v2.json"
+//     });
+//
+//     // DOMLoaded 이벤트 리스너를 별도로 정의
+//     function onDOMLoaded() {
+//         G_ANI_LTT_OBJ.goToAndStop(0, true);
+//         G_ANI_LTT_OBJ.play();
+//         splashElement.classList.add("keys");
+//     }
+//
+//     // complete 이벤트 리스너를 별도로 정의
+//     function onAnimationComplete() {
+//
+//         // 새 animationend 이벤트 리스너 추가
+//         function onAnimationEnd() {
+//
+//             splashElement.style.display = "none";
+//             splashElement.removeEventListener('animationend', onAnimationEnd);  //console.log("제거");
+//
+//             if (isBgm) {
+//                 bgmAniFunc();
+//                 bgmStreaming();
+//             }
+//             if (isGarland) {
+//                 floatGarland();
+//             }
+//             if($("#pop_rsvp").hasClass("needShow")) {
+//                 $("#pop_rsvp").css("display", "block");
+//             }
+//             onScroll()
+//         }
+//         // 이전 animationend 이벤트 리스너 제거
+//         splashElement.removeEventListener('animationend', onAnimationEnd);  //console.log("제거");
+//         splashElement.addEventListener('animationend', onAnimationEnd);  //console.log("등록");
+//     }
+//
+//     // 이벤트 리스너 등록
+//     G_ANI_LTT_OBJ.addEventListener('DOMLoaded', onDOMLoaded);
+//     G_ANI_LTT_OBJ.addEventListener('complete', onAnimationComplete);
+//
+// }
 
 // 오프닝 V3
 function splash_v3(isBgm, isGarland) {
