@@ -25,6 +25,7 @@ class InvitationAdmin(admin.ModelAdmin):
         "bride_firstname",
         "wedding_datetime",
         "weddinghall_name",
+        "count",
         "created_at",
     )
     search_fields = (

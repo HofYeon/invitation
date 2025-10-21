@@ -41,7 +41,7 @@ class Invitation(models.Model):
     main_img = models.ImageField("메인 이미지", upload_to=invitation_image_upload_to, blank=True, null=True)
     middle_img = models.ImageField("중간 이미지", upload_to=invitation_image_upload_to, blank=True, null=True)
     end_img = models.ImageField("엔드 이미지", upload_to=invitation_image_upload_to, blank=True, null=True)
-
+    count = models.IntegerField("조회수",default=0)
     created_at = models.DateTimeField("생성일", auto_now_add=True)
     update_at = models.DateTimeField("수정일", auto_now = True)
 
