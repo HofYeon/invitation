@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, Count
+from django.db.models import Prefetch, Count, F
 from django.http import JsonResponse
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -64,6 +64,10 @@ class InvitationCardView(View):
             .annotate(guestbook_count=Count('guestbook_entries')),  # 필요하면 카운트도 한 번에
             invitationname=invitationname
         )
+
+        invitation.count = F('count') + 1
+        invitation.save(update_fields=['count'])
+        # invitation.refresh_from_db(fields=['count'])
 
         #계좌 분리
         # --- 신랑 측 ---
@@ -145,7 +149,8 @@ class InvitationCardView(View):
         bride_families = getattr(invitation, 'pref_bride_families', [])
         guestbooks = getattr(invitation, 'pref_guestbook_entries', [])  # 최신순 이미 적용됨
         gallery = invitation.gallery.all()  # prefetch로 이미 캐시됨, 추가쿼리 X
-        print(guestbooks);
+
+
         # 2️⃣ 템플릿에 넘길 context 구성
         context = {
             "invitation": invitation,
