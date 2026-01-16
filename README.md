@@ -7,7 +7,7 @@
 - db : mysql
 - backend & framework : python - DJnago
 - frontend : html, css, jquery, javascript
-- docker compose
+- docke
 
 
 청첩장 페이지 예시 : https://yeon-mintcard.shop/invitation/card/realholovejihye/
