@@ -8,6 +8,7 @@
 - backend & framework : python - DJnago
 - frontend : html, css, jquery, javascript
 - docker
+- admin : Django admin
 
 
 청첩장 페이지 예시 : https://yeon-mintcard.shop/invitation/card/realholovejihye/
